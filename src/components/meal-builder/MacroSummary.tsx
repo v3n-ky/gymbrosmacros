@@ -28,6 +28,22 @@ export function MacroSummary({ macros, targets, compact }: MacroSummaryProps) {
     );
   }
 
+  // Calculate calorie percentage from each macro
+  // Protein = 4 cal/g, Carbs = 4 cal/g, Fat = 9 cal/g
+  const proteinCals = macros.protein * 4;
+  const carbsCals = macros.carbs * 4;
+  const fatCals = macros.fat * 9;
+  const totalMacroCals = proteinCals + carbsCals + fatCals;
+
+  const proteinPct = totalMacroCals > 0 ? (proteinCals / totalMacroCals) * 100 : 0;
+  const carbsPct = totalMacroCals > 0 ? (carbsCals / totalMacroCals) * 100 : 0;
+  const fatPct = totalMacroCals > 0 ? (fatCals / totalMacroCals) * 100 : 0;
+
+  // For calories bar: use target if available, otherwise show as proportion of a reasonable max
+  const calPct = targets?.calories
+    ? (macros.calories / targets.calories) * 100
+    : Math.min((macros.calories / 800) * 100, 100); // 800 cal as a reference max for single items
+
   return (
     <div className="space-y-3">
       <MacroBar
@@ -35,28 +51,28 @@ export function MacroSummary({ macros, targets, compact }: MacroSummaryProps) {
         value={macros.calories}
         unit=" cal"
         color="oklch(0.8 0.22 145)"
-        max={targets?.calories}
+        percentage={calPct}
       />
       <MacroBar
         label="Protein"
         value={macros.protein}
         unit="g"
         color="oklch(0.7 0.15 250)"
-        max={targets?.protein}
+        percentage={targets?.protein ? (macros.protein / targets.protein) * 100 : proteinPct}
       />
       <MacroBar
         label="Carbs"
         value={macros.carbs}
         unit="g"
         color="oklch(0.75 0.15 80)"
-        max={targets?.carbs}
+        percentage={targets?.carbs ? (macros.carbs / targets.carbs) * 100 : carbsPct}
       />
       <MacroBar
         label="Fat"
         value={macros.fat}
         unit="g"
         color="oklch(0.7 0.15 40)"
-        max={targets?.fat}
+        percentage={targets?.fat ? (macros.fat / targets.fat) * 100 : fatPct}
       />
     </div>
   );
