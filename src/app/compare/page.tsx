@@ -5,7 +5,7 @@ import { getAllMenuItems } from '@/data';
 import { restaurants } from '@/data/restaurants';
 import { MenuItem } from '@/types/menu';
 import { Macros } from '@/types/macros';
-import { proteinPerCalorie, isGymBroApproved, computeItemMacros } from '@/lib/macros';
+import { proteinPerCalorie, isTopPick, computeItemMacros } from '@/lib/macros';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { ItemCustomizer } from '@/components/meal-builder/ItemCustomizer';
@@ -183,9 +183,9 @@ export default function ComparePage() {
                         Most Protein
                       </Badge>
                     )}
-                    {isGymBroApproved(entry.macros) && (
+                    {isTopPick(entry.macros) && (
                       <Badge className="bg-primary/20 text-primary text-xs">
-                        GBA
+                        Top Pick
                       </Badge>
                     )}
                   </div>

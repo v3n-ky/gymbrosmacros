@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { FinderResult } from '@/lib/meal-finder';
-import { isHighProtein, isGymBroApproved, proteinPerCalorie } from '@/lib/macros';
+import { isHighProtein, isTopPick, proteinPerCalorie } from '@/lib/macros';
 
 interface FinderResultsProps {
   results: FinderResult[];
@@ -57,8 +57,8 @@ export function FinderResults({ results }: FinderResultsProps) {
                     >
                       {result.matchScore}% match
                     </Badge>
-                    {isGymBroApproved(result.item.baseMacros) && (
-                      <Badge className="bg-primary/20 text-primary text-[10px]">GBA</Badge>
+                    {isTopPick(result.item.baseMacros) && (
+                      <Badge className="bg-primary/20 text-primary text-[10px]">Top Pick</Badge>
                     )}
                   </div>
                 </div>

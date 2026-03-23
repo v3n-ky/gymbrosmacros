@@ -7,7 +7,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="text-sm text-muted-foreground">
-              <span className="font-bold text-primary">GymBrosMacros</span>
+              <span className="font-bold text-primary">EatMacros</span>
               {' '}— Australian fast food macro calculator
             </p>
             <p className="mt-1 text-xs text-muted-foreground">

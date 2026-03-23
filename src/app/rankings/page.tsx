@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { getAllMenuItems } from '@/data';
 import { restaurants } from '@/data/restaurants';
-import { proteinPerCalorie, isGymBroApproved } from '@/lib/macros';
+import { proteinPerCalorie, isTopPick } from '@/lib/macros';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 
@@ -156,8 +156,8 @@ export default function RankingsPage() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span className="font-medium">{item.name}</span>
-                    {isGymBroApproved(item.baseMacros) && (
-                      <Badge className="bg-primary/20 text-primary text-[10px] px-1">GBA</Badge>
+                    {isTopPick(item.baseMacros) && (
+                      <Badge className="bg-primary/20 text-primary text-[10px] px-1">Top Pick</Badge>
                     )}
                   </div>
                 </td>

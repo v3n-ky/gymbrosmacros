@@ -25,7 +25,7 @@ export default function HomePage() {
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Track your macros at Subway, GYG, Fishbowl, Grill&apos;d, Oporto,
-          Nando&apos;s and more. Built for gym bros who eat out.
+          Nando&apos;s and more. Find the perfect meal for your goals.
         </p>
         <div className="flex justify-center gap-4 mt-6">
           <Link

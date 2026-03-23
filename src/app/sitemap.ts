@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getAllRestaurantSlugs } from '@/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://gymbrosmacros.com.au';
+  const baseUrl = 'https://eatmacros.com.au';
   const restaurantSlugs = getAllRestaurantSlugs();
 
   const staticPages: MetadataRoute.Sitemap = [

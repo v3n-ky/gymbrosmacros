@@ -51,8 +51,8 @@ export function proteinPercentage(macros: Macros): number {
   return total > 0 ? Math.round(((macros.protein * 4) / total) * 100) : 0;
 }
 
-/** Whether an item qualifies as "Gym Bro Approved" */
-export function isGymBroApproved(macros: Macros): boolean {
+/** Whether an item qualifies as "Top Pick" */
+export function isTopPick(macros: Macros): boolean {
   return (
     macros.protein >= 30 &&
     macros.calories <= 600 &&

@@ -7,8 +7,8 @@ import { Macros, EMPTY_MACROS } from '@/types/macros';
 import { MenuItem } from '@/types/menu';
 import { computeItemMacros, sumMacros, multiplyMacros } from '@/lib/macros';
 
-const MEAL_STORAGE_KEY = 'gymbrosmacros-meal';
-const TARGETS_STORAGE_KEY = 'gymbrosmacros-targets';
+const MEAL_STORAGE_KEY = 'eatmacros-meal';
+const TARGETS_STORAGE_KEY = 'eatmacros-targets';
 
 const emptyMeal: Meal = {
   items: [],

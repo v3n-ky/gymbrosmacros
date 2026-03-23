@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MenuItem } from '@/types/menu';
-import { computeItemMacros, isHighProtein, isGymBroApproved } from '@/lib/macros';
+import { computeItemMacros, isHighProtein, isTopPick } from '@/lib/macros';
 import { MacroSummary } from './MacroSummary';
 
 interface ItemCustomizerProps {
@@ -37,7 +37,7 @@ export function ItemCustomizer({ item, open, onClose, onAdd }: ItemCustomizerPro
 
   const computedMacros = computeItemMacros(item, selectedOptions);
   const highProtein = isHighProtein(computedMacros);
-  const gymBroApproved = isGymBroApproved(computedMacros);
+  const topPick = isTopPick(computedMacros);
 
   const handleOptionToggle = (groupId: string, optionId: string, type: 'single' | 'multi', maxSelections?: number) => {
     setSelectedOptions((prev) => {
@@ -62,10 +62,10 @@ export function ItemCustomizer({ item, open, onClose, onAdd }: ItemCustomizerPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {item.name}
-            {gymBroApproved && (
-              <Badge className="bg-primary/20 text-primary text-xs">Gym Bro Approved</Badge>
+            {topPick && (
+              <Badge className="bg-primary/20 text-primary text-xs">Top Pick</Badge>
             )}
-            {highProtein && !gymBroApproved && (
+            {highProtein && !topPick && (
               <Badge variant="secondary" className="text-xs">High Protein</Badge>
             )}
           </DialogTitle>

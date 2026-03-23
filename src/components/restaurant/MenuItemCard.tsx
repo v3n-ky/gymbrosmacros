@@ -3,7 +3,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MenuItem } from '@/types/menu';
-import { isHighProtein, isGymBroApproved, proteinPerCalorie } from '@/lib/macros';
+import { isHighProtein, isTopPick, proteinPerCalorie } from '@/lib/macros';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -12,7 +12,7 @@ interface MenuItemCardProps {
 
 export function MenuItemCard({ item, onSelect }: MenuItemCardProps) {
   const highProtein = isHighProtein(item.baseMacros);
-  const gymBroApproved = isGymBroApproved(item.baseMacros);
+  const topPick = isTopPick(item.baseMacros);
 
   return (
     <Card
@@ -25,12 +25,12 @@ export function MenuItemCard({ item, onSelect }: MenuItemCardProps) {
             {item.name}
           </h4>
           <div className="flex gap-1 shrink-0 ml-2">
-            {gymBroApproved && (
+            {topPick && (
               <Badge className="bg-primary/20 text-primary text-[10px] px-1.5">
-                GBA
+                Top Pick
               </Badge>
             )}
-            {highProtein && !gymBroApproved && (
+            {highProtein && !topPick && (
               <Badge variant="secondary" className="text-[10px] px-1.5">
                 High Protein
               </Badge>

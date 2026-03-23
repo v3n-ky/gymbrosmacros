@@ -11,11 +11,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "GymBrosMacros | Australian Fast Food Macro Calculator",
-    template: "%s | GymBrosMacros",
+    default: "EatMacros | Australian Fast Food Macro Calculator",
+    template: "%s | EatMacros",
   },
   description:
-    "Calculate macros for your favourite Australian fast food chains. Subway, GYG, Fishbowl, Grill'd, Oporto, Nando's and more.",
+    "Track macros at your favourite Aussie fast food chains. Subway, GYG, Fishbowl, Grill'd, Oporto, Nando's and more.",
   keywords: [
     "macros",
     "fast food",
