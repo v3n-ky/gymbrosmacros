@@ -7,6 +7,7 @@ import { MenuItemCard } from '@/components/restaurant/MenuItemCard';
 import { ItemCustomizer } from './ItemCustomizer';
 import { MealTray } from './MealTray';
 import { useMealBuilder } from '@/hooks/useMealBuilder';
+import { ReportOutdatedButton } from '@/components/FeedbackLinks';
 
 interface MealBuilderProps {
   restaurant: Restaurant;
@@ -108,6 +109,10 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
           {filteredItems.map((item) => (
             <MenuItemCard key={item.id} item={item} onSelect={handleSelectItem} />
           ))}
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <ReportOutdatedButton restaurant={restaurant.name} />
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { RestaurantGrid } from '@/components/restaurant/RestaurantGrid';
+import { SuggestRestaurantButton, ReportOutdatedButton } from '@/components/FeedbackLinks';
 import { getAllMenuItems } from '@/data';
 import { proteinPerCalorie } from '@/lib/macros';
 
@@ -98,6 +99,10 @@ export default function HomePage() {
       <section>
         <h2 className="text-2xl font-bold mb-6">Choose a Restaurant</h2>
         <RestaurantGrid />
+        <div className="flex flex-wrap justify-center gap-3 mt-8">
+          <SuggestRestaurantButton />
+          <ReportOutdatedButton />
+        </div>
       </section>
     </div>
   );

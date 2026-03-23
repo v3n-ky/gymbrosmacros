@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ReportOutdatedButton, SuggestRestaurantButton } from '@/components/FeedbackLinks';
 
 export function Footer() {
   return (
@@ -14,7 +15,7 @@ export function Footer() {
               Not affiliated with or endorsed by any listed restaurant. Nutritional values are approximate.
             </p>
           </div>
-          <nav className="flex gap-6 text-sm text-muted-foreground">
+          <nav className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
             <Link href="/find" className="hover:text-primary transition-colors">
               Find a Meal
             </Link>
@@ -22,6 +23,10 @@ export function Footer() {
               Rankings
             </Link>
           </nav>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3 mt-6 pt-6 border-t border-border">
+          <ReportOutdatedButton />
+          <SuggestRestaurantButton />
         </div>
       </div>
     </footer>
