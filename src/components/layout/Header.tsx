@@ -17,8 +17,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold text-primary">GymBros</span>
-          <span className="text-xl font-bold text-foreground">Macros</span>
+          <span className="text-xl font-bold text-primary">GymBrosMacros</span>
         </Link>
 
         {/* Desktop nav */}
