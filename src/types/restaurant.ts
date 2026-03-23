@@ -13,5 +13,4 @@ export interface Restaurant {
 export interface OrderLinks {
   uberEats?: string;
   doorDash?: string;
-  menulog?: string;
 }

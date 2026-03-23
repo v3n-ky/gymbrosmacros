@@ -123,7 +123,7 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
         />
 
         {/* Order links */}
-        {(restaurant.orderLinks.uberEats || restaurant.orderLinks.doorDash || restaurant.orderLinks.menulog) && (
+        {(restaurant.orderLinks.uberEats || restaurant.orderLinks.doorDash) && (
           <div className="mt-4 rounded-xl border border-border bg-card p-4 hidden md:block">
             <h4 className="text-sm font-medium mb-3">Order Now</h4>
             <div className="flex flex-col gap-2">
@@ -145,16 +145,6 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
                   className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-center hover:bg-secondary transition-colors"
                 >
                   DoorDash
-                </a>
-              )}
-              {restaurant.orderLinks.menulog && (
-                <a
-                  href={restaurant.orderLinks.menulog}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-center hover:bg-secondary transition-colors"
-                >
-                  Menulog
                 </a>
               )}
             </div>

@@ -13,7 +13,6 @@ export const restaurants: Restaurant[] = [
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/subway',
       doorDash: 'https://www.doordash.com/en-AU/store/subway',
-      menulog: 'https://www.menulog.com.au/restaurants-subway',
     },
   },
   {
@@ -28,7 +27,6 @@ export const restaurants: Restaurant[] = [
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/guzman-y-gomez',
       doorDash: 'https://www.doordash.com/en-AU/store/guzman-y-gomez',
-      menulog: 'https://www.menulog.com.au/restaurants-guzman-y-gomez',
     },
   },
   {
@@ -57,7 +55,6 @@ export const restaurants: Restaurant[] = [
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/grilld',
       doorDash: 'https://www.doordash.com/en-AU/store/grilld',
-      menulog: 'https://www.menulog.com.au/restaurants-grilld',
     },
   },
   {
@@ -72,7 +69,6 @@ export const restaurants: Restaurant[] = [
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/oporto',
       doorDash: 'https://www.doordash.com/en-AU/store/oporto',
-      menulog: 'https://www.menulog.com.au/restaurants-oporto',
     },
   },
   {
@@ -87,7 +83,6 @@ export const restaurants: Restaurant[] = [
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/nandos',
       doorDash: 'https://www.doordash.com/en-AU/store/nandos',
-      menulog: 'https://www.menulog.com.au/restaurants-nandos',
     },
   },
 ];
