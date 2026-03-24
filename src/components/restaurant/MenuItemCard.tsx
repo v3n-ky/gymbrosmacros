@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MenuItem } from '@/types/menu';
 import { isHighProtein, isTopPick, proteinPerCalorie } from '@/lib/macros';
+import { DietaryIcons } from '@/components/DietaryIcons';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -62,7 +63,10 @@ export function MenuItemCard({ item, onSelect }: MenuItemCardProps) {
         </div>
 
         <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-          <span>{proteinPerCalorie(item.baseMacros)}g protein/100cal</span>
+          <span className="flex items-center gap-2">
+            <span>{proteinPerCalorie(item.baseMacros)}g protein/100cal</span>
+            <DietaryIcons tags={item.tags} />
+          </span>
           {item.customizationGroups && item.customizationGroups.length > 0 && (
             <span className="text-primary">Customise</span>
           )}

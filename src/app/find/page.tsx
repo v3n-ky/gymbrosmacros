@@ -7,10 +7,12 @@ import { MacroTargets } from '@/types/meal';
 import { getAllMenuItems } from '@/data';
 import { findMatchingItems } from '@/lib/meal-finder';
 import { restaurants } from '@/data/restaurants';
+import { DietaryFilters } from '@/components/DietaryIcons';
 
 export default function FindPage() {
   const [targets, setTargets] = useState<MacroTargets>({});
   const [selectedRestaurants, setSelectedRestaurants] = useState<string[]>([]);
+  const [dietaryFilters, setDietaryFilters] = useState<string[]>([]);
 
   const allItems = useMemo(() => getAllMenuItems(), []);
 
@@ -18,11 +20,18 @@ export default function FindPage() {
     const hasAnyTarget = Object.values(targets).some((v) => v != null);
     if (!hasAnyTarget) return [];
 
-    return findMatchingItems(allItems, targets, {
+    let items = allItems;
+    if (dietaryFilters.length > 0) {
+      items = items.filter((item) =>
+        dietaryFilters.every((tag) => item.tags?.includes(tag))
+      );
+    }
+
+    return findMatchingItems(items, targets, {
       restaurantFilter: selectedRestaurants.length > 0 ? selectedRestaurants : undefined,
       maxResults: 21,
     });
-  }, [allItems, targets, selectedRestaurants]);
+  }, [allItems, targets, selectedRestaurants, dietaryFilters]);
 
   const toggleRestaurant = (slug: string) => {
     setSelectedRestaurants((prev) =>
@@ -42,6 +51,12 @@ export default function FindPage() {
       {/* Target inputs */}
       <div className="rounded-xl border border-border bg-card p-6 mb-6">
         <MacroInput targets={targets} onChange={setTargets} />
+      </div>
+
+      {/* Dietary filters */}
+      <div className="mb-4">
+        <p className="text-xs text-muted-foreground mb-2">Dietary preference:</p>
+        <DietaryFilters selected={dietaryFilters} onChange={setDietaryFilters} />
       </div>
 
       {/* Restaurant filter */}

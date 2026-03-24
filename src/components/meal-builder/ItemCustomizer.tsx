@@ -13,9 +13,10 @@ interface ItemCustomizerProps {
   open: boolean;
   onClose: () => void;
   onAdd: (item: MenuItem, selectedOptions: Record<string, string[]>) => void;
+  submitLabel?: string;
 }
 
-export function ItemCustomizer({ item, open, onClose, onAdd }: ItemCustomizerProps) {
+export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add to Meal' }: ItemCustomizerProps) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
 
   // Reset selections when item changes
@@ -120,7 +121,7 @@ export function ItemCustomizer({ item, open, onClose, onAdd }: ItemCustomizerPro
             onClose();
           }}
         >
-          Add to Meal
+          {submitLabel}
         </Button>
       </DialogContent>
     </Dialog>

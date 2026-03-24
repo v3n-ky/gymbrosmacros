@@ -6,6 +6,7 @@ import { restaurants } from '@/data/restaurants';
 import { proteinPerCalorie, isTopPick } from '@/lib/macros';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { DietaryFilters, DietaryIcons } from '@/components/DietaryIcons';
 
 type SortKey = 'protein' | 'calories' | 'carbs' | 'fat' | 'efficiency';
 type SortDir = 'asc' | 'desc';
@@ -17,6 +18,7 @@ export default function RankingsPage() {
   const [filterRestaurant, setFilterRestaurant] = useState<string>('');
   const [filterMinProtein, setFilterMinProtein] = useState<string>('');
   const [filterMaxCalories, setFilterMaxCalories] = useState<string>('');
+  const [dietaryFilters, setDietaryFilters] = useState<string[]>([]);
 
   const filtered = useMemo(() => {
     let items = allItems;
@@ -30,9 +32,14 @@ export default function RankingsPage() {
     if (filterMaxCalories) {
       items = items.filter((i) => i.baseMacros.calories <= Number(filterMaxCalories));
     }
+    if (dietaryFilters.length > 0) {
+      items = items.filter((i) =>
+        dietaryFilters.every((tag) => i.tags?.includes(tag))
+      );
+    }
 
     return items;
-  }, [allItems, filterRestaurant, filterMinProtein, filterMaxCalories]);
+  }, [allItems, filterRestaurant, filterMinProtein, filterMaxCalories, dietaryFilters]);
 
   const sorted = useMemo(() => {
     const list = [...filtered];
@@ -78,6 +85,12 @@ export default function RankingsPage() {
       <p className="text-muted-foreground mb-6">
         Every menu item ranked. Default sorted by protein — because that&apos;s what matters.
       </p>
+
+      {/* Dietary filters */}
+      <div className="mb-4">
+        <p className="text-xs text-muted-foreground mb-2">Dietary preference:</p>
+        <DietaryFilters selected={dietaryFilters} onChange={setDietaryFilters} />
+      </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4 mb-6 rounded-xl border border-border bg-card p-4">
@@ -159,6 +172,7 @@ export default function RankingsPage() {
                     {isTopPick(item.baseMacros) && (
                       <Badge className="bg-primary/20 text-primary text-[10px] px-1">Top Pick</Badge>
                     )}
+                    <DietaryIcons tags={item.tags} />
                   </div>
                 </td>
                 <td className="px-4 py-3">

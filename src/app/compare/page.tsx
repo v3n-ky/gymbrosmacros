@@ -219,6 +219,7 @@ export default function ComparePage() {
         open={customizingItem !== null}
         onClose={() => setCustomizingItem(null)}
         onAdd={addEntry}
+        submitLabel="Add to Compare"
       />
     </div>
   );
