@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { MacroInput } from '@/components/meal-finder/MacroInput';
 import { FinderResults } from '@/components/meal-finder/FinderResults';
 import { MacroTargets } from '@/types/meal';
+import { MealType } from '@/types/profile';
 import { getAllMenuItems } from '@/data';
 import { findMatchingItems } from '@/lib/meal-finder';
 import { restaurants } from '@/data/restaurants';
@@ -11,15 +12,29 @@ import { DietaryFilters } from '@/components/DietaryIcons';
 import { useMealBuilder } from '@/hooks/useMealBuilder';
 import { useProfiles } from '@/hooks/useProfiles';
 
+const MEAL_TYPES: { id: MealType; label: string; emoji: string }[] = [
+  { id: 'breakfast', label: 'Breakfast', emoji: '🌅' },
+  { id: 'lunch',     label: 'Lunch',     emoji: '☀️' },
+  { id: 'dinner',    label: 'Dinner',    emoji: '🌙' },
+];
+
 export default function FindPage() {
   const { activeProfile, activeId, updateProfile } = useProfiles();
   const { addItem } = useMealBuilder();
 
-  const targets = activeProfile?.macroTargets ?? {};
+  const selectedMeal: MealType = activeProfile?.lastMealType ?? 'lunch';
+
+  const targets: MacroTargets = activeProfile?.mealTargets?.[selectedMeal] ?? {};
   const dietaryFilters = activeProfile?.dietaryFilters ?? [];
   const selectedRestaurants = activeProfile?.restaurantFilters ?? [];
 
-  const setTargets = (t: MacroTargets) => updateProfile(activeId, { macroTargets: t });
+  const setMealType = (m: MealType) => updateProfile(activeId, { lastMealType: m });
+
+  const setTargets = (t: MacroTargets) =>
+    updateProfile(activeId, {
+      mealTargets: { ...activeProfile?.mealTargets, [selectedMeal]: t } as Record<MealType, MacroTargets>,
+    });
+
   const setDietaryFilters = (f: string[]) => updateProfile(activeId, { dietaryFilters: f });
 
   const toggleRestaurant = (slug: string) => {
@@ -56,11 +71,41 @@ export default function FindPage() {
         <span className="text-primary">Find</span> a Meal by Macros
       </h1>
       <p className="text-muted-foreground mb-6">
-        Enter your target macros and we&apos;ll find matching items across all restaurants.
+        Select what you&apos;re ordering for and we&apos;ll find the best matches for your targets.
       </p>
 
-      {/* Target inputs */}
+      {/* Step 1: What are you ordering for? */}
+      <div className="rounded-xl border border-border bg-card p-6 mb-4">
+        <p className="text-sm font-semibold mb-3">What are you ordering for?</p>
+        <div className="flex gap-2 flex-wrap">
+          {MEAL_TYPES.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setMealType(m.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors border ${
+                selectedMeal === m.id
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-secondary text-muted-foreground border-transparent hover:text-foreground'
+              }`}
+            >
+              <span className="text-base">{m.emoji}</span> {m.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Step 2: Macro targets (pre-filled from profile) */}
       <div className="rounded-xl border border-border bg-card p-6 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm font-semibold">
+            {MEAL_TYPES.find((m) => m.id === selectedMeal)?.emoji} {MEAL_TYPES.find((m) => m.id === selectedMeal)?.label} targets
+          </p>
+          {!Object.values(targets).some((v) => v != null) && (
+            <span className="text-xs text-muted-foreground">
+              Set defaults in <a href="/profile" className="text-primary hover:underline">Profile</a>
+            </span>
+          )}
+        </div>
         <MacroInput targets={targets} onChange={setTargets} />
       </div>
 

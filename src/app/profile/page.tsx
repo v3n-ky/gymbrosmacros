@@ -6,73 +6,129 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useProfiles } from '@/hooks/useProfiles';
-import { ProfileId } from '@/types/profile';
+import { ProfileId, MealType } from '@/types/profile';
 import { MacroTargets } from '@/types/meal';
+
+const MEAL_TYPES: { id: MealType; label: string; emoji: string; hint: string }[] = [
+  { id: 'breakfast', label: 'Breakfast', emoji: '🌅', hint: 'e.g. 400 kcal, 30g protein' },
+  { id: 'lunch',     label: 'Lunch',     emoji: '☀️', hint: 'e.g. 600 kcal, 45g protein' },
+  { id: 'dinner',    label: 'Dinner',    emoji: '🌙', hint: 'e.g. 700 kcal, 50g protein' },
+];
+
+function MealTargetForm({ profileId, mealType }: { profileId: ProfileId; mealType: MealType }) {
+  const { profiles, updateProfile } = useProfiles();
+  const profile = profiles[profileId];
+  const existing = profile?.mealTargets?.[mealType] ?? {};
+
+  const [targets, setTargets] = useState<MacroTargets>(existing);
+  const [saved, setSaved] = useState(false);
+
+  const setField = (key: keyof MacroTargets, val: string) => {
+    const num = parseInt(val, 10);
+    setTargets((prev) => ({ ...prev, [key]: isNaN(num) || val === '' ? undefined : num }));
+  };
+
+  const handleSave = () => {
+    updateProfile(profileId, {
+      mealTargets: { ...profile.mealTargets, [mealType]: targets },
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const meal = MEAL_TYPES.find((m) => m.id === mealType)!;
+
+  return (
+    <Card>
+      <CardContent className="p-6 space-y-4">
+        <p className="text-sm text-muted-foreground">{meal.hint}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {([
+            { key: 'calories', label: 'Calories', unit: 'kcal', placeholder: 'e.g. 600' },
+            { key: 'protein',  label: 'Protein',  unit: 'g',    placeholder: 'e.g. 45' },
+            { key: 'carbs',    label: 'Carbs',    unit: 'g',    placeholder: 'e.g. 60' },
+            { key: 'fat',      label: 'Fat',      unit: 'g',    placeholder: 'e.g. 20' },
+          ] as const).map(({ key, label, unit, placeholder }) => (
+            <div key={key} className="space-y-1.5">
+              <Label htmlFor={`${profileId}-${mealType}-${key}`} className="text-xs text-muted-foreground">
+                {label} ({unit})
+              </Label>
+              <Input
+                id={`${profileId}-${mealType}-${key}`}
+                type="number"
+                min={0}
+                value={targets[key] ?? ''}
+                onChange={(e) => setField(key, e.target.value)}
+                placeholder={placeholder}
+              />
+            </div>
+          ))}
+        </div>
+        <Button onClick={handleSave} className="w-full sm:w-auto">
+          {saved ? 'Saved!' : 'Save targets'}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
 
 function ProfileForm({ profileId }: { profileId: ProfileId }) {
   const { profiles, updateProfile } = useProfiles();
   const profile = profiles[profileId];
 
   const [label, setLabel] = useState(profile?.label ?? '');
-  const [targets, setTargets] = useState<MacroTargets>(profile?.macroTargets ?? {});
-  const [saved, setSaved] = useState(false);
+  const [labelSaved, setLabelSaved] = useState(false);
+  const [activeMeal, setActiveMeal] = useState<MealType>('lunch');
 
-  const handleSave = () => {
-    updateProfile(profileId, { label: label.trim() || profileId, macroTargets: targets });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
-
-  const setTarget = (key: keyof MacroTargets, val: string) => {
-    const num = parseInt(val, 10);
-    setTargets((prev) => ({ ...prev, [key]: isNaN(num) || val === '' ? undefined : num }));
+  const handleSaveLabel = () => {
+    updateProfile(profileId, { label: label.trim() || profileId });
+    setLabelSaved(true);
+    setTimeout(() => setLabelSaved(false), 2000);
   };
 
   return (
-    <Card>
-      <CardContent className="p-6 space-y-5">
-        <div className="space-y-1.5">
-          <Label htmlFor={`label-${profileId}`} className="text-sm">Profile name</Label>
-          <Input
-            id={`label-${profileId}`}
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-            placeholder={profileId === 'A' ? 'e.g. Cutting' : 'e.g. Bulking'}
-            className="max-w-xs"
-          />
-        </div>
-
-        <div>
-          <p className="text-sm font-medium mb-3">Daily macro targets</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {([
-              { key: 'calories', label: 'Calories', unit: 'kcal', placeholder: 'e.g. 2000' },
-              { key: 'protein',  label: 'Protein',  unit: 'g',    placeholder: 'e.g. 160' },
-              { key: 'carbs',    label: 'Carbs',    unit: 'g',    placeholder: 'e.g. 200' },
-              { key: 'fat',      label: 'Fat',      unit: 'g',    placeholder: 'e.g. 70' },
-            ] as const).map(({ key, label: lbl, unit, placeholder }) => (
-              <div key={key} className="space-y-1.5">
-                <Label htmlFor={`${profileId}-${key}`} className="text-xs text-muted-foreground">
-                  {lbl} ({unit})
-                </Label>
-                <Input
-                  id={`${profileId}-${key}`}
-                  type="number"
-                  min={0}
-                  value={targets[key] ?? ''}
-                  onChange={(e) => setTarget(key, e.target.value)}
-                  placeholder={placeholder}
-                />
-              </div>
-            ))}
+    <div className="space-y-6">
+      {/* Profile name */}
+      <Card>
+        <CardContent className="p-6">
+          <div className="flex items-end gap-3">
+            <div className="space-y-1.5 flex-1 max-w-xs">
+              <Label htmlFor={`label-${profileId}`} className="text-sm">Profile name</Label>
+              <Input
+                id={`label-${profileId}`}
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
+                placeholder={profileId === 'A' ? 'e.g. Cutting' : 'e.g. Bulking'}
+              />
+            </div>
+            <Button variant="outline" onClick={handleSaveLabel} className="mb-0.5">
+              {labelSaved ? 'Saved!' : 'Save'}
+            </Button>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        <Button onClick={handleSave} className="w-full sm:w-auto">
-          {saved ? 'Saved!' : 'Save profile'}
-        </Button>
-      </CardContent>
-    </Card>
+      {/* Meal targets */}
+      <div>
+        <p className="text-sm font-medium mb-3">Macro targets per meal</p>
+        <div className="flex gap-2 mb-4">
+          {MEAL_TYPES.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setActiveMeal(m.id)}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                activeMeal === m.id
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <span>{m.emoji}</span> {m.label}
+            </button>
+          ))}
+        </div>
+        <MealTargetForm key={`${profileId}-${activeMeal}`} profileId={profileId} mealType={activeMeal} />
+      </div>
+    </div>
   );
 }
 
@@ -85,7 +141,7 @@ export default function ProfilePage() {
         <span className="text-primary">Profile</span> Settings
       </h1>
       <p className="text-muted-foreground mb-6">
-        Configure your cutting and bulking profiles. Targets are used to pre-fill the meal finder.
+        Set macro targets for each meal. These pre-fill Find a Meal when you pick a meal type.
       </p>
 
       {/* Profile tabs */}

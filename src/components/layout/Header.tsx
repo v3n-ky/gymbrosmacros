@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/favorites', label: 'Favorites' },
   { href: '/rankings', label: 'Rankings' },
   { href: '/compare', label: 'Compare' },
+  { href: '/profile', label: 'Profile' },
 ];
 
 export function Header() {

@@ -1,6 +1,7 @@
 import { MacroTargets } from './meal';
 
 export type ProfileId = 'A' | 'B';
+export type MealType = 'breakfast' | 'lunch' | 'dinner';
 
 export interface SavedItem {
   itemId: string;
@@ -12,8 +13,9 @@ export interface SavedItem {
 export interface UserProfile {
   id: ProfileId;
   label: string;
-  macroTargets: MacroTargets;
+  mealTargets: Record<MealType, MacroTargets>;
   dietaryFilters: string[];
   restaurantFilters: string[];
   favorites: SavedItem[];
+  lastMealType?: MealType;
 }
