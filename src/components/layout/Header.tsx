@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ProfileSwitcher } from '@/components/profile/ProfileSwitcher';
 
 const navLinks = [
   { href: '/', label: 'Restaurants' },
   { href: '/find', label: 'Find a Meal' },
+  { href: '/favorites', label: 'Favorites' },
   { href: '/rankings', label: 'Rankings' },
   { href: '/compare', label: 'Compare' },
 ];
@@ -33,6 +35,7 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <ProfileSwitcher />
         </nav>
 
         {/* Mobile menu button */}
@@ -41,12 +44,7 @@ export function Header() {
           className="md:hidden p-2 text-muted-foreground hover:text-foreground"
           aria-label="Toggle menu"
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {menuOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -69,6 +67,9 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <div className="pt-2">
+            <ProfileSwitcher />
+          </div>
         </nav>
       )}
     </header>

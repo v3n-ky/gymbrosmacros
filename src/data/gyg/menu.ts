@@ -192,6 +192,24 @@ const extrasGroup = {
   ],
 };
 
+// ─── REMOVAL GROUP (Burritos & Bowls) ────────────────────────────────────────
+// Cheese is a standard component in GYG burritos and bowls.
+// These negative-delta options let the algorithm (and the user) explicitly remove it.
+const removalGroup = {
+  id: 'gyg-remove',
+  name: 'Remove',
+  type: 'multi' as const,
+  required: false,
+  options: [
+    {
+      id: 'gyg-no-cheese',
+      name: 'No Cheese',
+      // Inverse of the extras cheese addition (approximate — not in PDF standalone)
+      macroDelta: { calories: -50, protein: -3, fat: -4 },
+    },
+  ],
+};
+
 // ─── SIZE GROUP (Burritos) ────────────────────────────────────────────────────
 // Little G's Grilled Chicken Burrito = 414 cal, 24.8g P, 46.1g C, 14.1g F
 // vs Regular = 773 cal, 48.3g P, 91.0g C, 23.5g F → delta ≈ -359 cal, -23g P, -45g C, -10g F
@@ -225,7 +243,7 @@ export const gygMenu: MenuItem[] = [
     servingSize: 'Regular burrito (480g)',
     isPopular: true,
     tags: ['high-protein', 'contains-meat', 'chicken'],
-    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup],
+    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-ground-beef-burrito',
@@ -237,7 +255,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 828, protein: 37, carbs: 94, fat: 34, sodium: 1950 },
     servingSize: 'Regular burrito (480g)',
     tags: ['high-protein', 'contains-meat', 'beef'],
-    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup],
+    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-pulled-pork-burrito',
@@ -249,7 +267,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 759, protein: 42, carbs: 90, fat: 25, sodium: 2030 },
     servingSize: 'Regular burrito (480g)',
     tags: ['high-protein', 'contains-meat', 'pork'],
-    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup],
+    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-beef-brisket-burrito',
@@ -261,7 +279,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 806, protein: 49, carbs: 91, fat: 27, sodium: 1930 },
     servingSize: 'Regular burrito (480g)',
     tags: ['high-protein', 'contains-meat', 'beef'],
-    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup],
+    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-veggie-burrito',
@@ -273,7 +291,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 808, protein: 24, carbs: 97, fat: 35, sodium: 1930 },
     servingSize: 'Regular burrito (550g)',
     tags: ['vegetarian', 'vegan'],
-    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup],
+    customizationGroups: [sizeGroupBurrito, heatGroupLarge, riceGroupBurrito, beanGroup, extrasGroup, removalGroup],
   },
 
   // ── BOWLS ─────────────────────────────────────────────────────────────────
@@ -288,7 +306,7 @@ export const gygMenu: MenuItem[] = [
     servingSize: 'Regular bowl (455g)',
     isPopular: true,
     tags: ['high-protein', 'contains-meat', 'chicken'],
-    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup],
+    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-ground-beef-bowl',
@@ -300,7 +318,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 714, protein: 32, carbs: 77, fat: 31, sodium: 1690 },
     servingSize: 'Regular bowl (455g)',
     tags: ['high-protein', 'contains-meat', 'beef'],
-    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup],
+    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-pulled-pork-bowl',
@@ -312,7 +330,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 645, protein: 38, carbs: 74, fat: 22, sodium: 1770 },
     servingSize: 'Regular bowl (455g)',
     tags: ['high-protein', 'contains-meat', 'pork'],
-    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup],
+    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-beef-brisket-bowl',
@@ -324,7 +342,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 692, protein: 44, carbs: 74, fat: 24, sodium: 1680 },
     servingSize: 'Regular bowl (455g)',
     tags: ['high-protein', 'contains-meat', 'beef'],
-    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup],
+    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup, removalGroup],
   },
   {
     id: 'gyg-veggie-bowl',
@@ -336,7 +354,7 @@ export const gygMenu: MenuItem[] = [
     baseMacros: { calories: 694, protein: 20, carbs: 80, fat: 32, sodium: 1670 },
     servingSize: 'Regular bowl (525g)',
     tags: ['vegetarian', 'vegan'],
-    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup],
+    customizationGroups: [heatGroupLarge, riceGroupBowl, beanGroup, extrasGroup, removalGroup],
   },
 
   // ── TACOS ─────────────────────────────────────────────────────────────────

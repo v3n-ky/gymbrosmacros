@@ -12,18 +12,20 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T 
         setStoredValue(JSON.parse(item));
       }
     } catch {
-      // If error, use initial value
+      // use initial value
     }
   }, [key]);
 
   const setValue = (value: T | ((prev: T) => T)) => {
-    const valueToStore = value instanceof Function ? value(storedValue) : value;
-    setStoredValue(valueToStore);
-    try {
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
-    } catch {
-      // Storage full or unavailable
-    }
+    setStoredValue((prev) => {
+      const valueToStore = value instanceof Function ? value(prev) : value;
+      try {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      } catch {
+        // storage full or unavailable
+      }
+      return valueToStore;
+    });
   };
 
   return [storedValue, setValue];

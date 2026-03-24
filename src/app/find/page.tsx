@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { MacroInput } from '@/components/meal-finder/MacroInput';
 import { FinderResults } from '@/components/meal-finder/FinderResults';
 import { MacroTargets } from '@/types/meal';
@@ -8,11 +8,28 @@ import { getAllMenuItems } from '@/data';
 import { findMatchingItems } from '@/lib/meal-finder';
 import { restaurants } from '@/data/restaurants';
 import { DietaryFilters } from '@/components/DietaryIcons';
+import { useMealBuilder } from '@/hooks/useMealBuilder';
+import { useProfiles } from '@/hooks/useProfiles';
 
 export default function FindPage() {
-  const [targets, setTargets] = useState<MacroTargets>({});
-  const [selectedRestaurants, setSelectedRestaurants] = useState<string[]>([]);
-  const [dietaryFilters, setDietaryFilters] = useState<string[]>([]);
+  const { activeProfile, activeId, updateProfile } = useProfiles();
+  const { addItem } = useMealBuilder();
+
+  const targets = activeProfile?.macroTargets ?? {};
+  const dietaryFilters = activeProfile?.dietaryFilters ?? [];
+  const selectedRestaurants = activeProfile?.restaurantFilters ?? [];
+
+  const setTargets = (t: MacroTargets) => updateProfile(activeId, { macroTargets: t });
+  const setDietaryFilters = (f: string[]) => updateProfile(activeId, { dietaryFilters: f });
+
+  const toggleRestaurant = (slug: string) => {
+    const current = activeProfile?.restaurantFilters ?? [];
+    updateProfile(activeId, {
+      restaurantFilters: current.includes(slug)
+        ? current.filter((s) => s !== slug)
+        : [...current, slug],
+    });
+  };
 
   const allItems = useMemo(() => getAllMenuItems(), []);
 
@@ -32,12 +49,6 @@ export default function FindPage() {
       maxResults: 21,
     });
   }, [allItems, targets, selectedRestaurants, dietaryFilters]);
-
-  const toggleRestaurant = (slug: string) => {
-    setSelectedRestaurants((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
-    );
-  };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
@@ -80,7 +91,7 @@ export default function FindPage() {
       </div>
 
       {/* Results */}
-      <FinderResults results={results} />
+      <FinderResults results={results} onAddItem={addItem} />
     </div>
   );
 }

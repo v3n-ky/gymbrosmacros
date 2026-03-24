@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { MenuItem } from '@/types/menu';
 import { computeItemMacros, isHighProtein, isTopPick } from '@/lib/macros';
 import { MacroSummary } from './MacroSummary';
+import { useProfiles } from '@/hooks/useProfiles';
 
 interface ItemCustomizerProps {
   item: MenuItem | null;
@@ -14,14 +15,19 @@ interface ItemCustomizerProps {
   onClose: () => void;
   onAdd: (item: MenuItem, selectedOptions: Record<string, string[]>) => void;
   submitLabel?: string;
+  initialOptions?: Record<string, string[]>;
 }
 
-export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add to Meal' }: ItemCustomizerProps) {
+export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add to Meal', initialOptions }: ItemCustomizerProps) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const { toggleFavorite, isFavorite } = useProfiles();
 
-  // Reset selections when item changes
   useMemo(() => {
     if (!item) return;
+    if (initialOptions && Object.keys(initialOptions).length > 0) {
+      setSelectedOptions(initialOptions);
+      return;
+    }
     const defaults: Record<string, string[]> = {};
     for (const group of item.customizationGroups ?? []) {
       if (group.defaultOptionId) {
@@ -32,13 +38,23 @@ export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add 
       }
     }
     setSelectedOptions(defaults);
-  }, [item]);
+  }, [item, initialOptions]);
 
   if (!item) return null;
 
   const computedMacros = computeItemMacros(item, selectedOptions);
   const highProtein = isHighProtein(computedMacros);
   const topPick = isTopPick(computedMacros);
+  const favorited = isFavorite(item.id, selectedOptions);
+
+  const handleToggleFavorite = () => {
+    toggleFavorite({
+      itemId: item.id,
+      restaurantSlug: item.restaurantSlug,
+      selectedOptions,
+      savedAt: Date.now(),
+    });
+  };
 
   const handleOptionToggle = (groupId: string, optionId: string, type: 'single' | 'multi', maxSelections?: number) => {
     setSelectedOptions((prev) => {
@@ -46,7 +62,6 @@ export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add 
       if (type === 'single') {
         return { ...prev, [groupId]: [optionId] };
       }
-      // Multi-select
       if (current.includes(optionId)) {
         return { ...prev, [groupId]: current.filter((id) => id !== optionId) };
       }
@@ -114,15 +129,26 @@ export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add 
           </div>
         ))}
 
-        <Button
-          className="w-full mt-2"
-          onClick={() => {
-            onAdd(item, selectedOptions);
-            onClose();
-          }}
-        >
-          {submitLabel}
-        </Button>
+        <div className="flex gap-2 mt-2">
+          <Button
+            variant="outline"
+            size="icon"
+            className={`h-10 w-10 flex-shrink-0 text-base ${favorited ? 'border-primary text-primary' : 'border-border text-muted-foreground hover:border-primary hover:text-primary'}`}
+            onClick={handleToggleFavorite}
+            aria-label={favorited ? 'Remove from favorites' : 'Save to favorites'}
+          >
+            {favorited ? '♥' : '♡'}
+          </Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              onAdd(item, selectedOptions);
+              onClose();
+            }}
+          >
+            {submitLabel}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
