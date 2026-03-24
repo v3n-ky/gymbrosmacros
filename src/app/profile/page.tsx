@@ -18,20 +18,29 @@ const MEAL_TYPES: { id: MealType; label: string; emoji: string; hint: string }[]
 function MealTargetForm({ profileId, mealType }: { profileId: ProfileId; mealType: MealType }) {
   const { profiles, updateProfile } = useProfiles();
   const profile = profiles[profileId];
-  const existing = profile?.mealTargets?.[mealType] ?? {};
+  // Always reactive — reads from localStorage once it loads
+  const persisted = profile?.mealTargets?.[mealType] ?? {};
 
-  const [targets, setTargets] = useState<MacroTargets>(existing);
+  // Track unsaved edits separately. null = "use persisted value" (no edits yet).
+  const [pending, setPending] = useState<MacroTargets | null>(null);
   const [saved, setSaved] = useState(false);
+
+  // Displayed value: local edits while typing, persisted once saved / on initial load
+  const targets = pending ?? persisted;
 
   const setField = (key: keyof MacroTargets, val: string) => {
     const num = parseInt(val, 10);
-    setTargets((prev) => ({ ...prev, [key]: isNaN(num) || val === '' ? undefined : num }));
+    setPending((prev) => ({
+      ...(prev ?? persisted),
+      [key]: isNaN(num) || val === '' ? undefined : num,
+    }));
   };
 
   const handleSave = () => {
     updateProfile(profileId, {
       mealTargets: { ...profile.mealTargets, [mealType]: targets },
     });
+    setPending(null); // persisted will update reactively; local edits cleared
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
