@@ -86,27 +86,32 @@ const SAUCE_GROUP = {
     {
       id: 'sauce-mayo',
       name: 'Mayo',
-      macroDelta: { calories: 100, fat: 11 },
+      // PDF: 15g serve = 44 cal, 4.6g fat, 0.6g carbs
+      macroDelta: { calories: 44, fat: 5 },
     },
     {
       id: 'sauce-sweet-onion',
       name: 'Sweet Onion',
-      macroDelta: { calories: 40, carbs: 9 },
+      // PDF: 21g serve = 39 cal, 9.1g carbs
+      macroDelta: { calories: 39, carbs: 9 },
     },
     {
       id: 'sauce-mustard',
       name: 'Mustard',
+      // PDF: Honey Mustard 21g = 30 cal, 6.5g carbs
       macroDelta: { calories: 5 },
     },
     {
       id: 'sauce-bbq',
       name: 'BBQ',
-      macroDelta: { calories: 30, carbs: 7 },
+      // PDF: Smoky BBQ 21g = 36 cal, 8.4g carbs
+      macroDelta: { calories: 36, carbs: 8 },
     },
     {
       id: 'sauce-ranch',
       name: 'Ranch',
-      macroDelta: { calories: 110, fat: 12 },
+      // PDF: Ranch Dressing 21g = 69 cal, 7.2g fat, 0.9g carbs
+      macroDelta: { calories: 69, fat: 7 },
     },
   ],
 };
@@ -120,10 +125,11 @@ export const subwayMenu: MenuItem[] = [
     name: 'Chicken Teriyaki',
     category: 'Classic Subs',
     description: '6-inch sub with teriyaki-glazed chicken, lettuce, tomato, and onion on Italian White bread.',
-    baseMacros: { calories: 468, protein: 32, carbs: 58, fat: 10 },
+    // PDF: Sweet Onion Chicken Teriyaki on white bread = 396 cal, 25.3g P, 54.5g C, 8.0g F
+    baseMacros: { calories: 396, protein: 25, carbs: 55, fat: 8 },
     servingSize: '6-inch sub',
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -132,10 +138,12 @@ export const subwayMenu: MenuItem[] = [
     name: 'Turkey Breast',
     category: 'Classic Subs',
     description: '6-inch sub with sliced turkey breast, lettuce, tomato, and cucumber on Italian White bread.',
-    baseMacros: { calories: 380, protein: 26, carbs: 56, fat: 5 },
+    // PDF: Turkey on Rye = 394 cal, 23.9g P, 47.7g C, 10.7g F (on malted rye)
+    // On Italian White basis: subtract rye delta (+49 cal, +3P, +3C, +2F)
+    baseMacros: { calories: 345, protein: 21, carbs: 45, fat: 8 },
     servingSize: '6-inch sub',
     isPopular: true,
-    tags: [],
+    tags: ['contains-meat'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -146,7 +154,7 @@ export const subwayMenu: MenuItem[] = [
     description: '6-inch sub with seasoned roast beef, lettuce, tomato, and onion on Italian White bread.',
     baseMacros: { calories: 410, protein: 28, carbs: 56, fat: 8 },
     servingSize: '6-inch sub',
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'beef'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -155,9 +163,11 @@ export const subwayMenu: MenuItem[] = [
     name: 'Veggie Delite',
     category: 'Classic Subs',
     description: '6-inch sub loaded with fresh lettuce, tomato, cucumber, capsicum, and onion on Italian White bread.',
-    baseMacros: { calories: 310, protein: 12, carbs: 56, fat: 4 },
+    // PDF: Veggie Delite with Avo on malted rye = 377 cal, 16.1g P, 44.5g C, 14.7g F
+    // On Italian White basis: subtract rye delta (+49 cal, +3P, +3C, +2F)
+    baseMacros: { calories: 328, protein: 13, carbs: 42, fat: 13 },
     servingSize: '6-inch sub',
-    tags: [],
+    tags: ['vegan', 'vegetarian'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -166,9 +176,11 @@ export const subwayMenu: MenuItem[] = [
     name: 'Italian BMT',
     category: 'Classic Subs',
     description: '6-inch sub with pepperoni, salami, and ham on Italian White bread.',
-    baseMacros: { calories: 480, protein: 24, carbs: 56, fat: 20 },
+    // PDF: Italian BMT on Italian H&C bread = 506 cal, 24.6g P, 42.5g C, 25.8g F
+    // On Italian White basis: subtract IH&C delta (+39 cal, +2P, +2C, +2F)
+    baseMacros: { calories: 467, protein: 23, carbs: 40, fat: 24 },
     servingSize: '6-inch sub',
-    tags: [],
+    tags: ['contains-meat', 'pork', 'beef'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -177,9 +189,11 @@ export const subwayMenu: MenuItem[] = [
     name: 'Chicken Schnitzel',
     category: 'Signature Subs',
     description: '6-inch sub with crispy chicken schnitzel, lettuce, and tomato on Italian White bread.',
-    baseMacros: { calories: 520, protein: 28, carbs: 64, fat: 16 },
+    // PDF: Chicken Schnitzel on Italian H&C bread = 538 cal, 29.9g P, 49.5g C, 23.6g F
+    // On Italian White basis: subtract IH&C delta (+39 cal, +2P, +2C, +2F)
+    baseMacros: { calories: 499, protein: 28, carbs: 47, fat: 22 },
     servingSize: '6-inch sub',
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -188,9 +202,11 @@ export const subwayMenu: MenuItem[] = [
     name: 'Meatball Marinara',
     category: 'Classic Subs',
     description: '6-inch sub with Italian-style meatballs smothered in marinara sauce on Italian White bread.',
-    baseMacros: { calories: 530, protein: 24, carbs: 62, fat: 20 },
+    // PDF: Italian Meatball on Italian H&C bread = 561 cal, 24.0g P, 51.8g C, 28.4g F
+    // On Italian White basis: subtract IH&C delta (+39 cal, +2P, +2C, +2F)
+    baseMacros: { calories: 522, protein: 22, carbs: 50, fat: 26 },
     servingSize: '6-inch sub',
-    tags: [],
+    tags: ['contains-meat', 'beef'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
@@ -201,7 +217,7 @@ export const subwayMenu: MenuItem[] = [
     description: '6-inch sub with seasoned steak strips and melted cheese on Italian White bread.',
     baseMacros: { calories: 460, protein: 30, carbs: 56, fat: 14 },
     servingSize: '6-inch sub',
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'beef'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
 ];
