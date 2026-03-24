@@ -96,7 +96,7 @@ export const grilldMenu: MenuItem[] = [
     category: 'Burgers',
     baseMacros: { calories: 480, protein: 38, carbs: 36, fat: 18 },
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: BURGER_CUSTOMIZATIONS,
   },
   {
@@ -105,7 +105,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Crispy Bacon & Cheese',
     category: 'Burgers',
     baseMacros: { calories: 680, protein: 36, carbs: 42, fat: 38 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'beef', 'pork', 'gluten-free-option'],
     customizationGroups: BURGER_CUSTOMIZATIONS,
   },
   {
@@ -114,7 +114,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Garden Goodness',
     category: 'Burgers',
     baseMacros: { calories: 520, protein: 18, carbs: 52, fat: 26 },
-    tags: ['vegetarian'],
+    tags: ['vegetarian', 'gluten-free-option'],
     customizationGroups: BURGER_CUSTOMIZATIONS,
   },
   {
@@ -124,7 +124,7 @@ export const grilldMenu: MenuItem[] = [
     category: 'Burgers',
     baseMacros: { calories: 620, protein: 40, carbs: 38, fat: 32 },
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'beef', 'gluten-free-option'],
     customizationGroups: BURGER_CUSTOMIZATIONS,
   },
   {
@@ -133,7 +133,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Sweet Chilli Chicken',
     category: 'Burgers',
     baseMacros: { calories: 540, protein: 34, carbs: 44, fat: 22 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: BURGER_CUSTOMIZATIONS,
   },
   {
@@ -142,7 +142,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Healthy Chicken Caesar Salad',
     category: 'Salads',
     baseMacros: { calories: 380, protein: 32, carbs: 16, fat: 22 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
   },
   {
     id: 'grilld-super-greens-salad',
@@ -150,7 +150,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Super Greens Salad',
     category: 'Salads',
     baseMacros: { calories: 320, protein: 12, carbs: 28, fat: 18 },
-    tags: [],
+    tags: ['vegetarian', 'vegan', 'gluten-free-option'],
   },
   {
     id: 'grilld-sweet-potato-fries',
@@ -158,7 +158,7 @@ export const grilldMenu: MenuItem[] = [
     name: 'Sweet Potato Fries',
     category: 'Sides',
     baseMacros: { calories: 340, protein: 4, carbs: 48, fat: 14 },
-    tags: [],
+    tags: ['vegetarian', 'vegan', 'gluten-free-option'],
   },
   {
     id: 'grilld-herbed-chips',
@@ -166,6 +166,6 @@ export const grilldMenu: MenuItem[] = [
     name: 'Herbed Chips',
     category: 'Sides',
     baseMacros: { calories: 380, protein: 6, carbs: 52, fat: 16 },
-    tags: [],
+    tags: ['vegetarian', 'vegan', 'gluten-free-option'],
   },
 ];

@@ -75,7 +75,7 @@ export const nandosMenu: MenuItem[] = [
     category: 'Chicken',
     baseMacros: { calories: 280, protein: 36, carbs: 2, fat: 14 },
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -85,7 +85,7 @@ export const nandosMenu: MenuItem[] = [
     category: 'Chicken',
     baseMacros: { calories: 520, protein: 64, carbs: 4, fat: 28 },
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -94,7 +94,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Chicken Breast Burger',
     category: 'Burgers',
     baseMacros: { calories: 480, protein: 34, carbs: 38, fat: 20 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -103,7 +103,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Chicken Thigh Burger',
     category: 'Burgers',
     baseMacros: { calories: 540, protein: 30, carbs: 40, fat: 28 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -112,7 +112,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Classic Wrap',
     category: 'Wraps',
     baseMacros: { calories: 460, protein: 28, carbs: 42, fat: 18 },
-    tags: [],
+    tags: ['contains-meat', 'chicken'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -121,7 +121,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Grilled Chicken Wrap',
     category: 'Wraps',
     baseMacros: { calories: 420, protein: 32, carbs: 38, fat: 14 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -130,7 +130,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Chicken Caesar Salad',
     category: 'Salads',
     baseMacros: { calories: 380, protein: 30, carbs: 14, fat: 22 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -139,7 +139,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Mediterranean Salad',
     category: 'Salads',
     baseMacros: { calories: 340, protein: 26, carbs: 18, fat: 18 },
-    tags: [],
+    tags: ['contains-meat', 'chicken', 'gluten-free-option'],
     customizationGroups: CHICKEN_CUSTOMIZATIONS,
   },
   {
@@ -148,7 +148,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Peri-Peri Chicken Tenders (5pc)',
     category: 'Sides',
     baseMacros: { calories: 380, protein: 28, carbs: 22, fat: 18 },
-    tags: [],
+    tags: ['contains-meat', 'chicken'],
     customizationGroups: [SPICE_LEVEL_GROUP],
   },
   {
@@ -157,7 +157,7 @@ export const nandosMenu: MenuItem[] = [
     name: 'Spicy Rice',
     category: 'Sides',
     baseMacros: { calories: 280, protein: 6, carbs: 48, fat: 6 },
-    tags: [],
+    tags: ['vegan', 'vegetarian', 'gluten-free-option'],
   },
   {
     id: 'nandos-coleslaw',
@@ -165,6 +165,6 @@ export const nandosMenu: MenuItem[] = [
     name: 'Coleslaw',
     category: 'Sides',
     baseMacros: { calories: 120, protein: 2, carbs: 8, fat: 8 },
-    tags: [],
+    tags: ['vegetarian', 'gluten-free-option'],
   },
 ];

@@ -84,6 +84,7 @@ export const oportoMenu: MenuItem[] = [
     category: 'Burgers',
     baseMacros: { calories: 520, protein: 28, carbs: 42, fat: 24 },
     isPopular: true,
+    tags: ['contains-meat', 'chicken'],
     customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
   },
   {
@@ -92,7 +93,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Double Bondi Burger',
     category: 'Burgers',
     baseMacros: { calories: 720, protein: 44, carbs: 44, fat: 38 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
   },
   {
@@ -101,6 +102,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Chicken Rappa',
     category: 'Wraps',
     baseMacros: { calories: 480, protein: 26, carbs: 48, fat: 18 },
+    tags: ['contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
@@ -110,7 +112,7 @@ export const oportoMenu: MenuItem[] = [
     category: 'Wraps',
     baseMacros: { calories: 420, protein: 30, carbs: 44, fat: 14 },
     isPopular: true,
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
@@ -119,7 +121,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Pulled Chicken Bowl',
     category: 'Bowls',
     baseMacros: { calories: 510, protein: 36, carbs: 52, fat: 16 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
@@ -128,7 +130,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Grilled Chicken Bowl',
     category: 'Bowls',
     baseMacros: { calories: 480, protein: 38, carbs: 48, fat: 14 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
@@ -137,7 +139,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Original Chilli Chicken Burger',
     category: 'Burgers',
     baseMacros: { calories: 560, protein: 30, carbs: 46, fat: 26 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
   },
   {
@@ -146,7 +148,7 @@ export const oportoMenu: MenuItem[] = [
     name: 'Oporto Chicken Tenders (5pc)',
     category: 'Sides',
     baseMacros: { calories: 440, protein: 32, carbs: 28, fat: 22 },
-    tags: ['high-protein'],
+    tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [sauceGroup],
   },
 ];
