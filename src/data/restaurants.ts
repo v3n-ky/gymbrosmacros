@@ -35,7 +35,7 @@ export const restaurants: Restaurant[] = [
     shortName: 'Fishbowl',
     brandColor: '#00B4D8',
     websiteUrl: 'https://www.fishbowl.com.au',
-    nutritionSourceUrl: 'https://www.fishbowl.com.au/nutrition',
+    nutritionSourceUrl: 'https://fishbowl.com.au/media/site/a7c38cedc6-1765146075/fishbowl-nutritional-overview-dec-25.pdf',
     categories: ['Bowls', 'Salads', 'Sides'],
     lastUpdated: '2026-03-23',
     orderLinks: {
@@ -77,7 +77,7 @@ export const restaurants: Restaurant[] = [
     shortName: "Nando's",
     brandColor: '#D32F2F',
     websiteUrl: 'https://www.nandos.com.au',
-    nutritionSourceUrl: 'https://www.nandos.com.au/food/nutrition',
+    nutritionSourceUrl: 'https://www.nandos.com.au/menu',
     categories: ['Chicken', 'Burgers', 'Wraps', 'Sides', 'Salads'],
     lastUpdated: '2026-03-23',
     orderLinks: {
