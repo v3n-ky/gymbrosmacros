@@ -5,7 +5,6 @@ import { MenuItem } from '@/types/menu';
 import { Restaurant } from '@/types/restaurant';
 import { MenuItemCard } from '@/components/restaurant/MenuItemCard';
 import { ItemCustomizer } from './ItemCustomizer';
-import { MealTray } from './MealTray';
 import { useMealBuilder } from '@/hooks/useMealBuilder';
 import { ReportOutdatedButton } from '@/components/FeedbackLinks';
 
@@ -19,8 +18,7 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
   const [customizingItem, setCustomizingItem] = useState<MenuItem | null>(null);
   const [sortBy, setSortBy] = useState<'protein' | 'calories' | 'name'>('protein');
 
-  const { meal, targets, addItem, removeItem, updateQuantity, clearMeal } =
-    useMealBuilder();
+  const { addItem } = useMealBuilder();
 
   const categories = useMemo(
     () => [...new Set(menuItems.map((i) => i.category))],
@@ -116,20 +114,10 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
         </div>
       </div>
 
-      {/* Meal tray sidebar (desktop) */}
-      <div className="w-full md:w-80 shrink-0">
-        <MealTray
-          items={meal.items}
-          totalMacros={meal.totalMacros}
-          targets={targets}
-          onRemoveItem={removeItem}
-          onUpdateQuantity={updateQuantity}
-          onClear={clearMeal}
-        />
-
-        {/* Order links */}
-        {(restaurant.orderLinks.uberEats || restaurant.orderLinks.doorDash) && (
-          <div className="mt-4 rounded-xl border border-border bg-card p-4 hidden md:block">
+      {/* Order links (desktop sidebar) */}
+      {(restaurant.orderLinks.uberEats || restaurant.orderLinks.doorDash) && (
+        <div className="w-full md:w-80 shrink-0">
+          <div className="rounded-xl border border-border bg-card p-4 hidden md:block">
             <h4 className="text-sm font-medium mb-3">Order Now</h4>
             <div className="flex flex-col gap-2">
               {restaurant.orderLinks.uberEats && (
@@ -154,8 +142,8 @@ export function MealBuilder({ restaurant, menuItems }: MealBuilderProps) {
               )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Item customizer dialog */}
       <ItemCustomizer

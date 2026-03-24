@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { GlobalMealTray } from "@/components/meal-builder/GlobalMealTray";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <Header />
         <main className="flex-1">{children}</main>
+        <GlobalMealTray />
         <Footer />
       </body>
     </html>
