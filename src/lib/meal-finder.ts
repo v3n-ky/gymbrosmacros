@@ -42,9 +42,10 @@ export function findMatchingItems(
   }
 
   return items
-    .map((item) => {
+    .flatMap((item) => {
       const variants = findBestVariants(item, targets, maxVariants);
-      return { item, variants, bestVariant: variants[0] };
+      if (variants.length === 0) return [];
+      return [{ item, variants, bestVariant: variants[0] }];
     })
     .sort((a, b) => b.bestVariant.matchScore - a.bestVariant.matchScore)
     .slice(0, maxResults);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,7 +22,7 @@ export function ItemCustomizer({ item, open, onClose, onAdd, submitLabel = 'Add 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
   const { toggleFavorite, isFavorite } = useProfiles();
 
-  useMemo(() => {
+  useEffect(() => {
     if (!item) return;
     if (initialOptions && Object.keys(initialOptions).length > 0) {
       setSelectedOptions(initialOptions);

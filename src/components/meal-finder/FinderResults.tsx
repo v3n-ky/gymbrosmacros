@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -166,6 +166,10 @@ function ResultCard({ result, onAddItem }: ResultCardProps) {
 
 export function FinderResults({ results, onAddItem }: FinderResultsProps) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [results]);
 
   if (results.length === 0) {
     return (

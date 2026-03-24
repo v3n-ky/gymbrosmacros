@@ -7,7 +7,7 @@ import { UserProfile, ProfileId, SavedItem } from '@/types/profile';
 const makeDefault = (id: ProfileId, label: string): UserProfile => ({
   id,
   label,
-  macroTargets: {},
+  mealTargets: { breakfast: {}, lunch: {}, dinner: {} },
   dietaryFilters: [],
   restaurantFilters: [],
   favorites: [],
@@ -18,21 +18,45 @@ const DEFAULT_PROFILES: Record<ProfileId, UserProfile> = {
   B: makeDefault('B', 'Bulking'),
 };
 
+/** Canonical, order-independent key for a saved item. */
+function favoriteKey(itemId: string, selectedOptions: Record<string, string[]>): string {
+  const sorted = Object.keys(selectedOptions)
+    .sort()
+    .map((k) => `${k}:${[...selectedOptions[k]].sort().join(',')}`)
+    .join('|');
+  return `${itemId}__${sorted}`;
+}
+
+/** Ensure a value from localStorage is a valid profile record, filling gaps with defaults. */
+function sanitiseProfiles(raw: unknown): Record<ProfileId, UserProfile> {
+  const base = (raw && typeof raw === 'object' && !Array.isArray(raw))
+    ? (raw as Record<string, unknown>)
+    : {};
+
+  return {
+    A: { ...makeDefault('A', 'Cutting'), ...(typeof base.A === 'object' && base.A ? base.A as Partial<UserProfile> : {}) },
+    B: { ...makeDefault('B', 'Bulking'), ...(typeof base.B === 'object' && base.B ? base.B as Partial<UserProfile> : {}) },
+  };
+}
+
 export function useProfiles() {
-  const [profiles, setProfiles] = useLocalStorage<Record<ProfileId, UserProfile>>(
+  const [rawProfiles, setProfiles] = useLocalStorage<Record<ProfileId, UserProfile>>(
     'gmb-profiles',
     DEFAULT_PROFILES
   );
-  const [activeId, setActiveId] = useLocalStorage<ProfileId>('gmb-active-profile', 'A');
+  const [rawActiveId, setActiveId] = useLocalStorage<ProfileId>('gmb-active-profile', 'A');
 
+  // Harden: ensure profiles always has both keys, and activeId is valid
+  const profiles = sanitiseProfiles(rawProfiles);
+  const activeId: ProfileId = rawActiveId === 'A' || rawActiveId === 'B' ? rawActiveId : 'A';
   const activeProfile = profiles[activeId];
 
   const updateProfile = useCallback(
     (id: ProfileId, updates: Partial<UserProfile>) => {
-      setProfiles((prev) => ({
-        ...prev,
-        [id]: { ...prev[id], ...updates },
-      }));
+      setProfiles((prev) => {
+        const safe = sanitiseProfiles(prev);
+        return { ...safe, [id]: { ...safe[id], ...updates } };
+      });
     },
     [setProfiles]
   );
@@ -40,17 +64,18 @@ export function useProfiles() {
   const toggleFavorite = useCallback(
     (item: SavedItem) => {
       setProfiles((prev) => {
-        const profile = prev[activeId];
-        const key = item.itemId + JSON.stringify(item.selectedOptions);
+        const safe = sanitiseProfiles(prev);
+        const profile = safe[activeId];
+        const key = favoriteKey(item.itemId, item.selectedOptions);
         const exists = profile.favorites.some(
-          (f) => f.itemId + JSON.stringify(f.selectedOptions) === key
+          (f) => favoriteKey(f.itemId, f.selectedOptions) === key
         );
         const favorites = exists
           ? profile.favorites.filter(
-              (f) => f.itemId + JSON.stringify(f.selectedOptions) !== key
+              (f) => favoriteKey(f.itemId, f.selectedOptions) !== key
             )
           : [...profile.favorites, item];
-        return { ...prev, [activeId]: { ...profile, favorites } };
+        return { ...safe, [activeId]: { ...profile, favorites } };
       });
     },
     [setProfiles, activeId]
@@ -58,9 +83,9 @@ export function useProfiles() {
 
   const isFavorite = useCallback(
     (itemId: string, selectedOptions: Record<string, string[]>) => {
-      const key = itemId + JSON.stringify(selectedOptions);
-      return activeProfile.favorites.some(
-        (f) => f.itemId + JSON.stringify(f.selectedOptions) === key
+      const key = favoriteKey(itemId, selectedOptions);
+      return (activeProfile.favorites ?? []).some(
+        (f) => favoriteKey(f.itemId, f.selectedOptions) === key
       );
     },
     [activeProfile]
