@@ -1,4 +1,5 @@
 import { MacroTargets } from './meal';
+import { Macros } from './macros';
 
 export type ProfileId = 'A' | 'B';
 export type MealType = 'breakfast' | 'lunch' | 'dinner';
@@ -10,6 +11,22 @@ export interface SavedItem {
   savedAt: number;
 }
 
+export interface SavedMealItem {
+  itemId: string;
+  restaurantSlug: string;
+  selectedOptions: Record<string, string[]>;
+  computedMacros: Macros;
+  quantity: number;
+}
+
+export interface SavedMeal {
+  id: string;
+  name: string;
+  items: SavedMealItem[];
+  totalMacros: Macros;
+  savedAt: number;
+}
+
 export interface UserProfile {
   id: ProfileId;
   label: string;
@@ -17,5 +34,6 @@ export interface UserProfile {
   dietaryFilters: string[];
   restaurantFilters: string[];
   favorites: SavedItem[];
+  savedMeals: SavedMeal[];
   lastMealType?: MealType;
 }

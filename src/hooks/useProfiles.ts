@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useLocalStorage } from './useLocalStorage';
-import { UserProfile, ProfileId, SavedItem } from '@/types/profile';
+import { UserProfile, ProfileId, SavedItem, SavedMeal } from '@/types/profile';
 
 const makeDefault = (id: ProfileId, label: string): UserProfile => ({
   id,
@@ -11,6 +11,7 @@ const makeDefault = (id: ProfileId, label: string): UserProfile => ({
   dietaryFilters: [],
   restaurantFilters: [],
   favorites: [],
+  savedMeals: [],
 });
 
 const DEFAULT_PROFILES: Record<ProfileId, UserProfile> = {
@@ -91,6 +92,40 @@ export function useProfiles() {
     [activeProfile]
   );
 
+  const saveMeal = useCallback(
+    (meal: SavedMeal) => {
+      setProfiles((prev) => {
+        const safe = sanitiseProfiles(prev);
+        const profile = safe[activeId];
+        return {
+          ...safe,
+          [activeId]: {
+            ...profile,
+            savedMeals: [...(profile.savedMeals ?? []), meal],
+          },
+        };
+      });
+    },
+    [setProfiles, activeId]
+  );
+
+  const removeSavedMeal = useCallback(
+    (id: string) => {
+      setProfiles((prev) => {
+        const safe = sanitiseProfiles(prev);
+        const profile = safe[activeId];
+        return {
+          ...safe,
+          [activeId]: {
+            ...profile,
+            savedMeals: (profile.savedMeals ?? []).filter((m) => m.id !== id),
+          },
+        };
+      });
+    },
+    [setProfiles, activeId]
+  );
+
   return {
     profiles,
     activeId,
@@ -99,5 +134,7 @@ export function useProfiles() {
     updateProfile,
     toggleFavorite,
     isFavorite,
+    saveMeal,
+    removeSavedMeal,
   };
 }
