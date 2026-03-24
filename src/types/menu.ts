@@ -20,6 +20,8 @@ export interface CustomizationGroup {
   required: boolean;
   maxSelections?: number;
   defaultOptionId?: string;
+  /** When true and 2 options are selected, each delta is halved (e.g. half-and-half base) */
+  halfAndHalf?: boolean;
   options: CustomizationOption[];
 }
 

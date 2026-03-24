@@ -9,12 +9,13 @@ export function computeItemMacros(
 
   for (const group of item.customizationGroups ?? []) {
     const selected = selectedOptions[group.id] ?? [];
+    const divisor = group.halfAndHalf && selected.length === 2 ? 2 : 1;
     for (const optionId of selected) {
       const option = group.options.find((o: CustomizationOption) => o.id === optionId);
       if (option?.macroDelta) {
         for (const [key, value] of Object.entries(option.macroDelta)) {
           (result as Record<string, number | undefined>)[key] =
-            ((result as Record<string, number | undefined>)[key] ?? 0) + (value ?? 0);
+            ((result as Record<string, number | undefined>)[key] ?? 0) + Math.round((value ?? 0) / divisor);
         }
       }
     }
