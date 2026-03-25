@@ -84,12 +84,25 @@ describe('6-inch sub base macros (PDF October 2025)', () => {
     expectMacro(item.baseMacros.protein, 21, 'White-basis protein');
   });
 
-  it('Veggie Delite on Malted Rye: ~377 cal (incl. avo), ~16g protein', () => {
+  it('Veggie Delite base (Italian White, no avo): ~258 cal, ~7g fat', () => {
     const item = getItem('subway-veggie-delite');
     // PDF: Veggie Delite with Avo on malted rye = 377 cal, 16.1g P, 44.5g C, 14.7g F
-    // baseMacros stored on White basis (no rye, no avo)
-    expectMacro(item.baseMacros.calories, 328, 'White-basis calories');
+    // Base = White basis, no avo: 377 − 49 (rye) − 70 (avo) = 258 cal; fat 14.7 − 2 − 6 = 6.7 → 7g
+    expectMacro(item.baseMacros.calories, 258, 'White-basis (no avo) calories');
     expectMacro(item.baseMacros.protein, 13, 'White-basis protein');
+    expectMacro(item.baseMacros.fat, 7, 'White-basis (no avo) fat');
+  });
+
+  it('Veggie Delite with Avo added back: ~328 cal, ~13g fat', () => {
+    const item = getItem('subway-veggie-delite');
+    // Adding avo extra (+70 cal, +6g fat) should match the mid-step before rye conversion
+    const macros = computeItemMacros(item, {
+      bread: ['bread-italian-white'],
+      size: ['size-6inch'],
+      extras: ['extra-avocado'],
+    });
+    expectMacro(macros.calories, 328, 'White+avo calories');
+    expectMacro(macros.fat, 13, 'White+avo fat');
   });
 });
 

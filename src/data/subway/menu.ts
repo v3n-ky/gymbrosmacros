@@ -148,25 +148,15 @@ export const subwayMenu: MenuItem[] = [
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
   {
-    id: 'subway-roast-beef',
-    restaurantSlug: 'subway',
-    name: 'Roast Beef',
-    category: 'Classic Subs',
-    description: '6-inch sub with seasoned roast beef, lettuce, tomato, and onion on Italian White bread.',
-    baseMacros: { calories: 410, protein: 28, carbs: 56, fat: 8 },
-    servingSize: '6-inch sub',
-    tags: ['high-protein', 'contains-meat', 'beef'],
-    customizationGroups: SHARED_CUSTOMIZATIONS,
-  },
-  {
     id: 'subway-veggie-delite',
     restaurantSlug: 'subway',
     name: 'Veggie Delite',
     category: 'Classic Subs',
     description: '6-inch sub loaded with fresh lettuce, tomato, cucumber, capsicum, and onion on Italian White bread.',
     // PDF: Veggie Delite with Avo on malted rye = 377 cal, 16.1g P, 44.5g C, 14.7g F
-    // On Italian White basis: subtract rye delta (+49 cal, +3P, +3C, +2F)
-    baseMacros: { calories: 328, protein: 13, carbs: 42, fat: 13 },
+    // On Italian White basis (no avo): subtract rye delta (+49 cal) AND avo delta (+70 cal, +6g fat)
+    // 377 − 49 − 70 = 258 cal; 14.7 − 2 (rye) − 6 (avo) = 6.7g fat → rounded 7g fat
+    baseMacros: { calories: 258, protein: 13, carbs: 42, fat: 7 },
     servingSize: '6-inch sub',
     tags: ['vegan', 'vegetarian'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
@@ -208,17 +198,6 @@ export const subwayMenu: MenuItem[] = [
     baseMacros: { calories: 522, protein: 22, carbs: 50, fat: 26 },
     servingSize: '6-inch sub',
     tags: ['contains-meat', 'beef'],
-    customizationGroups: SHARED_CUSTOMIZATIONS,
-  },
-  {
-    id: 'subway-steak-and-cheese',
-    restaurantSlug: 'subway',
-    name: 'Steak & Cheese',
-    category: 'Signature Subs',
-    description: '6-inch sub with seasoned steak strips and melted cheese on Italian White bread.',
-    baseMacros: { calories: 460, protein: 30, carbs: 56, fat: 14 },
-    servingSize: '6-inch sub',
-    tags: ['high-protein', 'contains-meat', 'beef'],
     customizationGroups: SHARED_CUSTOMIZATIONS,
   },
 ];
