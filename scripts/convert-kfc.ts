@@ -20,6 +20,11 @@ interface NutritionComponent {
   isActive: boolean;
 }
 
+interface AllergenComponent {
+  allergenComponent: string;
+  isPresent: boolean;
+}
+
 interface KFCItem {
   id: string;
   name: string;
@@ -27,6 +32,7 @@ interface KFCItem {
   content?: {
     nutritionalInformation?: NutritionComponent[];
     longDescription?: string;
+    allergenInformation?: AllergenComponent[];
   };
   shortDescription?: { lang: string; value: string }[];
 }
