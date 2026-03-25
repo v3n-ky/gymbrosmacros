@@ -31,11 +31,13 @@ export function MacroInput({ targets, onChange }: MacroInputProps) {
             placeholder={placeholder}
             value={targets[key] ?? ''}
             onChange={(e) => {
-              const value = e.target.value === '' ? undefined : Number(e.target.value);
-              onChange({ ...targets, [key]: value });
-            }}
-            onKeyDown={(e) => {
-              if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
+              const raw = e.target.value;
+              if (raw === '') {
+                onChange({ ...targets, [key]: undefined });
+              } else {
+                const num = parseInt(raw, 10);
+                if (!isNaN(num) && num >= 0) onChange({ ...targets, [key]: num });
+              }
             }}
             className="mt-1"
           />

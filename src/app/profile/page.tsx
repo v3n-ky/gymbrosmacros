@@ -32,7 +32,7 @@ function MealTargetForm({ profileId, mealType }: { profileId: ProfileId; mealTyp
     const num = parseInt(val, 10);
     setPending((prev) => ({
       ...(prev ?? persisted),
-      [key]: isNaN(num) || val === '' ? undefined : num,
+      [key]: isNaN(num) || val === '' || num < 0 ? undefined : num,
     }));
   };
 
@@ -68,9 +68,6 @@ function MealTargetForm({ profileId, mealType }: { profileId: ProfileId; mealTyp
                 min={0}
                 value={targets[key] ?? ''}
                 onChange={(e) => setField(key, e.target.value)}
-                onKeyDown={(e) => {
-                  if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
-                }}
                 placeholder={placeholder}
               />
             </div>

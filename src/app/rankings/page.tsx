@@ -113,9 +113,9 @@ export default function RankingsPage() {
             type="number"
             min={0}
             value={filterMinProtein}
-            onChange={(e) => setFilterMinProtein(e.target.value)}
-            onKeyDown={(e) => {
-              if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === '' || (parseInt(v, 10) >= 0)) setFilterMinProtein(v);
             }}
             placeholder="e.g. 30"
             className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm w-24"
@@ -127,9 +127,9 @@ export default function RankingsPage() {
             type="number"
             min={0}
             value={filterMaxCalories}
-            onChange={(e) => setFilterMaxCalories(e.target.value)}
-            onKeyDown={(e) => {
-              if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === '' || (parseInt(v, 10) >= 0)) setFilterMaxCalories(v);
             }}
             placeholder="e.g. 600"
             className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm w-24"
