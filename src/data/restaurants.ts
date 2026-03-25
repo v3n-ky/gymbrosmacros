@@ -64,7 +64,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#E65100',
     websiteUrl: 'https://www.oporto.com.au',
     nutritionSourceUrl: 'https://www.oporto.com.au/nutrition',
-    categories: ['Burgers', 'Wraps', 'Bowls', 'Sides'],
+    categories: ['Burgers', 'Rappas', 'Bowls', 'Sides'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/oporto',
