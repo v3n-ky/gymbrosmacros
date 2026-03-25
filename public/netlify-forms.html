@@ -3,17 +3,20 @@
   <head><title>Netlify form definitions</title></head>
   <body>
     <!-- Hidden form definitions so Netlify's build bot registers both forms.
-         Actual submissions are made via AJAX from FeedbackLinks.tsx. -->
-    <form name="outdated-data" data-netlify="true" hidden>
+         Actual submissions are made via AJAX from FeedbackLinks.tsx.
+         data-netlify-honeypot: Netlify rejects any submission where bot-field is non-empty. -->
+    <form name="outdated-data" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="outdated-data" />
+      <input name="bot-field" />
       <input name="restaurant" />
       <input name="item-name" />
       <textarea name="details"></textarea>
       <input name="email" />
     </form>
 
-    <form name="restaurant-request" data-netlify="true" hidden>
+    <form name="restaurant-request" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="restaurant-request" />
+      <input name="bot-field" />
       <textarea name="details"></textarea>
       <input name="email" />
     </form>

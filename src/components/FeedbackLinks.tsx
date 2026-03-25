@@ -29,7 +29,8 @@ function FeedbackModal({ open, type, restaurant, onClose }: FeedbackModalProps) 
     setStatus('sending');
 
     const formName = isOutdated ? 'outdated-data' : 'restaurant-request';
-    const fields: Record<string, string> = { 'form-name': formName, details };
+    // 'bot-field' is the honeypot — always empty for real users; Netlify rejects if non-empty
+    const fields: Record<string, string> = { 'form-name': formName, 'bot-field': '', details };
     if (isOutdated && restaurantName) fields['restaurant'] = restaurantName;
     if (isOutdated && itemName) fields['item-name'] = itemName;
     if (email) fields['email'] = email;
@@ -94,6 +95,13 @@ function FeedbackModal({ open, type, restaurant, onClose }: FeedbackModalProps) 
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Honeypot — hidden from humans, bots fill it, Netlify rejects those submissions */}
+            <p aria-hidden="true" className="hidden">
+              <label>
+                Don&apos;t fill this out if you&apos;re human:
+                <input name="bot-field" tabIndex={-1} autoComplete="off" />
+              </label>
+            </p>
             {isOutdated && (
               <>
                 <div>
