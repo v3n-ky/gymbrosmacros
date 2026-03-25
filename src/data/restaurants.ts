@@ -8,7 +8,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#008C15',
     websiteUrl: 'https://www.subway.com/en-AU',
     nutritionSourceUrl: 'https://www.subway.com/en-AU/MenuNutrition/Nutrition',
-    categories: ['Classic Subs', 'Signature Subs', 'Wraps', 'Salads', 'Sides'],
+    categories: ['Classic Subs', 'Signature Subs'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/subway',
@@ -22,7 +22,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#FFD100',
     websiteUrl: 'https://www.guzmanygomez.com.au',
     nutritionSourceUrl: 'https://www.guzmanygomez.com.au/nutrition',
-    categories: ['Burritos', 'Bowls', 'Tacos', 'Nachos', 'Sides'],
+    categories: ['Burritos', 'Bowls', 'Tacos', 'Nachos'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/guzman-y-gomez',
@@ -36,7 +36,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#00B4D8',
     websiteUrl: 'https://www.fishbowl.com.au',
     nutritionSourceUrl: 'https://fishbowl.com.au/media/site/a7c38cedc6-1765146075/fishbowl-nutritional-overview-dec-25.pdf',
-    categories: ['Bowls', 'Salads', 'Sides'],
+    categories: ['House Favourites', 'Warm Bowls', 'Street Food', 'Build Your Own'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/fishbowl',
@@ -50,7 +50,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#D32F2F',
     websiteUrl: 'https://www.grilld.com.au',
     nutritionSourceUrl: 'https://www.grilld.com.au/menu',
-    categories: ['Burgers', 'Salads', 'Sides', 'Kids'],
+    categories: ['Burgers', 'Salads', 'Sides'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/grilld',
@@ -78,7 +78,7 @@ export const restaurants: Restaurant[] = [
     brandColor: '#D32F2F',
     websiteUrl: 'https://www.nandos.com.au',
     nutritionSourceUrl: 'https://www.nandos.com.au/menu',
-    categories: ['Chicken', 'Burgers', 'Wraps', 'Sides', 'Salads'],
+    categories: ['Chicken', 'Wraps & Burgers', 'Salads & Bowls', 'Sides'],
     lastUpdated: '2026-03-23',
     orderLinks: {
       uberEats: 'https://www.ubereats.com/au/brand/nandos',
