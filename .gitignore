@@ -57,6 +57,8 @@ playwright-tasks.js
 
 # Scraper output (generated data files, not the scripts themselves)
 scripts/*.json
+scripts/*.html
+scripts/*.png
 
 # Scraper debug screenshots (transient, not useful in repo)
 docs/scrape-debug/

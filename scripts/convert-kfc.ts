@@ -114,7 +114,24 @@ function normalizeCategory(raw: string): string {
     'KIDS': 'Box Meals',
     'COMBO MEALS': 'Box Meals',
   };
-  return map[raw.toUpperCase()] ?? raw;
+  const normalized = map[raw.toUpperCase()];
+  if (!normalized) {
+    console.warn(`[convert-kfc] Unknown category: "${raw}" — passing through verbatim. Add it to normalizeCategory().`);
+  }
+  return normalized ?? raw;
+}
+
+// Category specificity priority — lower index = more canonical.
+// Promotional / catch-all buckets (Featured, Value Meals) are deprioritised
+// so that the same item first seen in FEATURED OFFERS still ends up under
+// its true home (Burgers, Chicken, etc.) when a better occurrence exists.
+const CATEGORY_PRIORITY: string[] = [
+  'Drinks', 'Wraps & Bowls', 'Chicken', 'Burgers', 'Snacks & Sides',
+  'Box Meals', 'Value Meals', 'Featured',
+];
+function categoryRank(cat: string): number {
+  const idx = CATEGORY_PRIORITY.indexOf(cat);
+  return idx === -1 ? CATEGORY_PRIORITY.length : idx;
 }
 
 const apiData = JSON.parse(readFileSync(join(__dirname, 'kfc-api-responses.json'), 'utf-8'));
@@ -123,14 +140,17 @@ const genericMenu = apiData[4].data as { id: string; categories: KFCCategory[] }
 
 const collected = collectItems(genericMenu.categories);
 
-// Deduplicate by generated slug (same item can appear in multiple categories with different API ids)
-const seen = new Set<string>();
-const unique = collected.filter(({ item }) => {
-  const slug = `kfc-${slugify(item.name!)}`;
-  if (seen.has(slug)) return false;
-  seen.add(slug);
-  return true;
-});
+// Deduplicate by slug, keeping the occurrence with the most canonical category.
+// e.g. Zinger Burger appearing in FEATURED OFFERS first should end up under Burgers.
+const bySlug = new Map<string, { item: KFCItem; category: string }>();
+for (const entry of collected) {
+  const slug = `kfc-${slugify(entry.item.name!)}`;
+  const existing = bySlug.get(slug);
+  if (!existing || categoryRank(normalizeCategory(entry.category)) < categoryRank(normalizeCategory(existing.category))) {
+    bySlug.set(slug, entry);
+  }
+}
+const unique = [...bySlug.values()];
 
 console.log(`Total unique items with nutrition: ${unique.length}`);
 
@@ -145,7 +165,9 @@ for (const { category } of unique) {
 const menuItems = unique.map(({ item, category }) => {
   const info = item.content!.nutritionalInformation!;
   const kjEnergy = getNutrient(info, 'Energy');
-  const calories = Math.round(kjEnergy / 4.184);
+  // 4.184 kJ = 1 kcal (thermochemical definition used on Australian food labels)
+  const KJ_PER_KCAL = 4.184;
+  const calories = Math.round(kjEnergy / KJ_PER_KCAL);
   const protein = getNutrient(info, 'Protein');
   const fat = getNutrient(info, 'Fat, total');
   const carbs = getNutrient(info, 'Carbohydrate');
@@ -179,13 +201,21 @@ const menuItems = unique.map(({ item, category }) => {
     (a) => a.allergenComponent.toLowerCase().includes('crustacea') && a.isPresent
   );
 
-  // Combos/boxes/feasts carry bundled items — their allergen data is unreliable
+  // Combos/boxes/feasts carry bundled items — their allergen data is unreliable.
+  // Note: "pack" and "box" could theoretically appear in a standalone item name;
+  // this heuristic errs on the side of caution (no false GF tags on bundles).
   const isBundled = /combo|feast|box|pack|deal|lunch|dinner/i.test(item.name ?? '');
+
+  // Name-based drink detection: some beverages first appear under SNACK HACKS
+  // in the API (a promotional bundle section), so their normalised category ends
+  // up as "Snacks & Sides" instead of "Drinks". Detect them by name so they
+  // always receive the correct tags regardless of which API category wins.
+  const isDrinkByName = /pepsi|solo|mountain dew|lemonade|7up|sparkling water|sunkist|freeze|lipton|apple juice|ice tea/i.test(item.name ?? '');
 
   // ── Tag assignment ─────────────────────────────────────────────────────────
   const tags: string[] = [];
 
-  if (normalizedCat === 'Drinks') {
+  if (normalizedCat === 'Drinks' || isDrinkByName) {
     tags.push('drink');
     // Drinks with no animal allergens are vegan
     if (!hasMilk && !hasEgg && !hasFish && !hasCrustacea) {
@@ -198,7 +228,9 @@ const menuItems = unique.map(({ item, category }) => {
     if (hasMeat) {
       tags.push('contains-meat');
     } else {
-      // Coleslaw, dips, chips, sauces — no meat
+      // Coleslaw, dips, chips, sauces — no meat.
+      // Note: vegan/vegetarian here reflects ingredients only. KFC chips are
+      // fried in shared oil with chicken; cross-contamination is not captured.
       if (!hasMilk && !hasEgg && !hasFish && !hasCrustacea) {
         tags.push('vegan');
         tags.push('vegetarian');

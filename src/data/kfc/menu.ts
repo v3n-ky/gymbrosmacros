@@ -23,7 +23,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-3-piece-liquid-gold-tenders",
     restaurantSlug: 'kfc',
     name: "3 Piece Liquid Gold Tenders",
-    category: "Featured",
+    category: "Chicken",
     description: "3 Piece Original Tenders™ with 1 Liquid Gold.",
     baseMacros: {
       calories: 982,
@@ -41,7 +41,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-5-piece-liquid-gold-tenders",
     restaurantSlug: 'kfc',
     name: "5 Piece Liquid Gold Tenders",
-    category: "Featured",
+    category: "Chicken",
     description: "5 Piece Original Tenders™ with 1 Liquid Gold.",
     baseMacros: {
       calories: 1178,
@@ -59,7 +59,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-tenders-box-regular",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Tenders Box - Regular",
-    category: "Featured",
+    category: "Box Meals",
     description: "4 Original Tenders™, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy, 1 Dinner Roll and 1 Regular Drink.",
     baseMacros: {
       calories: 1536,
@@ -77,7 +77,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-tenders-box-large",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Tenders Box - Large",
-    category: "Featured",
+    category: "Box Meals",
     description: "4 Original Tenders™, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy, 1 Dinner Roll and 1 Regular Drink.",
     baseMacros: {
       calories: 1820,
@@ -95,7 +95,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-3-piece-liquid-gold-wicked-boneless",
     restaurantSlug: 'kfc',
     name: "3 Piece Liquid Gold Wicked Boneless",
-    category: "Featured",
+    category: "Chicken",
     description: "3 Wicked Boneless with 1 Liquid Gold.",
     baseMacros: {
       calories: 1029,
@@ -113,7 +113,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-6-piece-liquid-gold-wicked-boneless",
     restaurantSlug: 'kfc',
     name: "6 Piece Liquid Gold Wicked Boneless",
-    category: "Featured",
+    category: "Chicken",
     description: "6 Wicked Boneless with 1 Liquid Gold.",
     baseMacros: {
       calories: 1372,
@@ -131,7 +131,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-wicked-box-regular",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Wicked Box - Regular",
-    category: "Featured",
+    category: "Box Meals",
     description: "4 Wicked Boneless, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy, 1 Dinner Roll and 1 Regular Drink.",
     baseMacros: {
       calories: 1599,
@@ -149,7 +149,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-wicked-box-large",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Wicked Box - Large",
-    category: "Featured",
+    category: "Box Meals",
     description: "4 Wicked Boneless, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy, 1 Dinner Roll and 1 Regular Drink.",
     baseMacros: {
       calories: 1883,
@@ -167,7 +167,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-original-crispy-burger",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Original Crispy Burger",
-    category: "Featured",
+    category: "Burgers",
     description: "Burger with 1 Liquid Gold.",
     baseMacros: {
       calories: 495,
@@ -185,7 +185,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-zinger-burger",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Zinger® Burger",
-    category: "Featured",
+    category: "Burgers",
     description: "Burger with 1 Liquid Gold.",
     baseMacros: {
       calories: 495,
@@ -203,7 +203,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-zinger-box-regular",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Zinger® Box - Regular",
-    category: "Featured",
+    category: "Box Meals",
     description: "Burger with 2 Wicked Boneless, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy and 1 Regular Drink.",
     baseMacros: {
       calories: 1759,
@@ -221,7 +221,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-zinger-box-large",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Zinger® Box - Large",
-    category: "Featured",
+    category: "Box Meals",
     description: "Burger with 2 Wicked Boneless, 1 Liquid Gold, 1 Portion of Chips, 1 Regular Potato & Gravy and 1 Regular Drink.",
     baseMacros: {
       calories: 2043,
@@ -239,7 +239,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-tender-slider",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Tender Slider",
-    category: "Featured",
+    category: "Snacks & Sides",
     description: "Slider with 1 Liquid Gold.",
     baseMacros: {
       calories: 278,
@@ -257,7 +257,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-liquid-gold-wicked-slider",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Wicked Slider",
-    category: "Featured",
+    category: "Snacks & Sides",
     description: "Slider with 1 Liquid Gold.",
     baseMacros: {
       calories: 294,
@@ -275,7 +275,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-giant-liquid-gold-sauce",
     restaurantSlug: 'kfc',
     name: "Giant Liquid Gold Sauce",
-    category: "Featured",
+    category: "Snacks & Sides",
     description: "Giant Liquid Gold Sauce",
     baseMacros: {
       calories: 686,
@@ -287,13 +287,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "145g",
     isPopular: false,
-    tags: ["contains-meat","gluten-free-option"],
+    tags: ["vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-liquid-gold-feast",
     restaurantSlug: 'kfc',
     name: "Liquid Gold Feast",
-    category: "Featured",
+    category: "Box Meals",
     description: "4 Wicked Boneless, 4 Original Tenders™, 6 Nuggets, 1 Maxi Popcorn Chicken®, 2 Large Chips  and 2 Tubs Liquid Gold.",
     baseMacros: {
       calories: 4328,
@@ -2075,7 +2075,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-pepsi-freeze",
     restaurantSlug: 'kfc',
     name: "Pepsi Freeze",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "The legendary KFC Freeze is the daddy of frozen drinks. Grab the OG Pepsi Freeze and you're set. (Contains Caffeine). Not everywhere and not forever.",
     baseMacros: {
       calories: 175,
@@ -2087,13 +2087,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "362g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-mountain-dew-freeze",
     restaurantSlug: 'kfc',
     name: "Mountain Dew Freeze",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "The legendary KFC Freeze is the daddy of frozen drinks. Grab a refreshing Mountain Dew Freeze and you're set. This offer is not everywhere and not forever. Mountain Dew Freeze contains Caffeine and is not recommended for children, pregnant or lactating women or individuals sensitive to caffeine.",
     baseMacros: {
       calories: 187,
@@ -2105,13 +2105,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "360g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-raspberry-freeze",
     restaurantSlug: 'kfc',
     name: "Raspberry Freeze",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "The legendary KFC Freeze is the daddy of frozen drinks. Grab a sweet, tangy Schweppes Raspberry Freeze and you're set. ​Not everywhere and not forever.",
     baseMacros: {
       calories: 182,
@@ -2123,13 +2123,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "347g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-pepsi-max",
     restaurantSlug: 'kfc',
     name: "Regular Pepsi Max",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "^ Pepsi Max, Pepsi, Pepsi Freeze & Mountain Dew Freeze contains caffeine. Mountain Dew Freeze is not recommended for children, pregnant or lactating women or individuals sensitive to caffeine.",
     baseMacros: {
       calories: 1,
@@ -2140,13 +2140,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "375g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-pepsi",
     restaurantSlug: 'kfc',
     name: "Regular Pepsi",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "^ Pepsi Max, Pepsi, Pepsi Freeze & Mountain Dew Freeze contains caffeine. Mountain Dew Freeze is not recommended for children, pregnant or lactating women or individuals sensitive to caffeine.",
     baseMacros: {
       calories: 104,
@@ -2158,13 +2158,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "391g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-7up",
     restaurantSlug: 'kfc',
     name: "Regular 7Up",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "Regular 7Up",
     baseMacros: {
       calories: 166,
@@ -2176,13 +2176,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "391g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-mountain-dew",
     restaurantSlug: 'kfc',
     name: "Regular Mountain Dew",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "Regular Mountain Dew",
     baseMacros: {
       calories: 105,
@@ -2194,13 +2194,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "392g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-solo",
     restaurantSlug: 'kfc',
     name: "Regular Solo",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "Regular Solo",
     baseMacros: {
       calories: 186,
@@ -2212,13 +2212,13 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "390g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-regular-sunkist-no-sugar",
     restaurantSlug: 'kfc',
     name: "Regular Sunkist No Sugar",
-    category: "Snacks & Sides",
+    category: "Drinks",
     description: "Regular Sunkist No Sugar",
     baseMacros: {
       calories: 2,
@@ -2229,7 +2229,7 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "380g",
     isPopular: false,
-    tags: ["vegan","vegetarian","gluten-free-option"],
+    tags: ["drink","vegan","vegetarian","gluten-free-option"],
   },
   {
     id: "kfc-zinger-protein-pack-regular",
@@ -2253,7 +2253,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-zinger-protein-bowl",
     restaurantSlug: 'kfc',
     name: "Zinger® Protein Bowl",
-    category: "Chicken",
+    category: "Wraps & Bowls",
     description: "Zinger® Protein Bowl",
     baseMacros: {
       calories: 552,
@@ -2271,7 +2271,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-zinger-protein-bowl-combo-regular",
     restaurantSlug: 'kfc',
     name: "Zinger® Protein Bowl Combo - Regular",
-    category: "Chicken",
+    category: "Wraps & Bowls",
     description: "Zinger® Protein Bowl with 1 Regular Chips and 1 Regular Drink.",
     baseMacros: {
       calories: 837,
@@ -2289,7 +2289,7 @@ export const kfcMenu: MenuItem[] = [
     id: "kfc-zinger-protein-bowl-combo-large",
     restaurantSlug: 'kfc',
     name: "Zinger® Protein Bowl Combo - Large",
-    category: "Chicken",
+    category: "Wraps & Bowls",
     description: "Zinger® Protein Bowl with 1 Regular Chips and 1 Regular Drink.",
     baseMacros: {
       calories: 1121,
@@ -3503,7 +3503,7 @@ export const kfcMenu: MenuItem[] = [
     },
     servingSize: "561g",
     isPopular: false,
-    tags: ["contains-meat"],
+    tags: ["drink","vegan","vegetarian"],
   },
   {
     id: "kfc-double-combo-meal-regular",

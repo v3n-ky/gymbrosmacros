@@ -28,8 +28,8 @@ test.describe('KFC restaurant page', () => {
     const card = page.locator('main').filter({ hasText: /Zinger.*Burger/ }).first();
     await expect(card).toBeVisible({ timeout: 5000 });
     const text = await card.textContent();
-    expect(text).toMatch(/448/);   // calories
-    expect(text).toMatch(/26/);    // protein (26.2g)
+    expect(text).toMatch(/448\s*(cal|kcal)?/i);   // calories
+    expect(text).toMatch(/26\.2\s*g/);             // protein — specific enough to avoid false matches
   });
 
   test('Regular Chips card shows correct calories', async ({ page }) => {

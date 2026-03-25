@@ -27,14 +27,17 @@ export default function RankingsPage() {
     if (filterRestaurant) {
       items = items.filter((i) => i.restaurantSlug === filterRestaurant);
     }
-    if (filterMinProtein) {
-      items = items.filter((i) => i.baseMacros.protein >= Number(filterMinProtein));
+    const minProtein = Number(filterMinProtein);
+    if (filterMinProtein && !isNaN(minProtein)) {
+      items = items.filter((i) => i.baseMacros.protein >= minProtein);
     }
-    if (filterMinCalories) {
-      items = items.filter((i) => i.baseMacros.calories >= Number(filterMinCalories));
+    const minCal = Number(filterMinCalories);
+    if (filterMinCalories && !isNaN(minCal)) {
+      items = items.filter((i) => i.baseMacros.calories >= minCal);
     }
-    if (filterMaxCalories) {
-      items = items.filter((i) => i.baseMacros.calories <= Number(filterMaxCalories));
+    const maxCal = Number(filterMaxCalories);
+    if (filterMaxCalories && !isNaN(maxCal)) {
+      items = items.filter((i) => i.baseMacros.calories <= maxCal);
     }
     if (dietaryFilters.length > 0) {
       const prefs = dietaryFilters.filter((t) => t !== 'gluten-free-option');

@@ -216,6 +216,18 @@ describe('KFC data integrity', () => {
     }
   });
 
+  it('well-known beverages are tagged "drink" regardless of API category placement', () => {
+    // Some drinks appear under SNACK HACKS in the API before COLD DRINKS —
+    // the converter must detect them by name, not just by category.
+    const beverageNames = ['Regular Pepsi Max', 'Regular Pepsi', 'Regular 7Up'];
+    for (const name of beverageNames) {
+      const item = kfcMenu.find((i) => i.name === name);
+      if (!item) continue; // item may not exist in all menu snapshots
+      expect(item.tags, `${name} should be tagged drink`).toContain('drink');
+      expect(item.tags, `${name} should not be tagged contains-meat`).not.toContain('contains-meat');
+    }
+  });
+
   it('chicken/burger/twister items are tagged contains-meat', () => {
     const meatItems = kfcMenu.filter((i) =>
       ['Burgers', 'Chicken', 'Wraps & Bowls', 'Box Meals'].includes(i.category)
@@ -233,7 +245,7 @@ describe('KFC data integrity', () => {
     }
   });
 
-  it('205 unique menu items loaded', () => {
+  it('205 unique menu items loaded (zero-energy items excluded)', () => {
     expect(kfcMenu.length).toBe(205);
   });
 });
