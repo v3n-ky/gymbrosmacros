@@ -72,6 +72,20 @@ export const restaurants: Restaurant[] = [
     },
   },
   {
+    slug: 'kfc',
+    name: 'KFC',
+    shortName: 'KFC',
+    brandColor: '#F40027',
+    websiteUrl: 'https://www.kfc.com.au',
+    nutritionSourceUrl: 'https://www.kfc.com.au/nutrition-allergen',
+    categories: ['Featured', 'Burgers', 'Chicken', 'Wraps & Bowls', 'Snacks & Sides', 'Box Meals', 'Value Meals', 'Drinks'],
+    lastUpdated: '2026-03-25',
+    orderLinks: {
+      uberEats: 'https://www.ubereats.com/au/brand/kfc',
+      doorDash: 'https://www.doordash.com/en-AU/store/kfc',
+    },
+  },
+  {
     slug: 'nandos',
     name: "Nando's",
     shortName: "Nando's",

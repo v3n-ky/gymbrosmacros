@@ -5,6 +5,7 @@ import { fishbowlMenu } from './fishbowl/menu';
 import { grilldMenu } from './grilld/menu';
 import { oportoMenu } from './oporto/menu';
 import { nandosMenu } from './nandos/menu';
+import { kfcMenu } from './kfc/menu';
 
 export { restaurants, getRestaurant, getAllRestaurantSlugs } from './restaurants';
 
@@ -15,6 +16,7 @@ const menusByRestaurant: Record<string, MenuItem[]> = {
   grilld: grilldMenu,
   oporto: oportoMenu,
   nandos: nandosMenu,
+  kfc: kfcMenu,
 };
 
 export function getMenuItems(restaurantSlug: string): MenuItem[] {
