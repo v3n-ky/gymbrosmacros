@@ -17,7 +17,8 @@ export default function RankingsPage() {
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [filterRestaurant, setFilterRestaurant] = useState<string>('');
   const [filterMinProtein, setFilterMinProtein] = useState<string>('');
-  const [filterMaxCalories, setFilterMaxCalories] = useState<string>('');
+  const [filterMinCalories, setFilterMinCalories] = useState<string>('100');
+  const [filterMaxCalories, setFilterMaxCalories] = useState<string>('1000');
   const [dietaryFilters, setDietaryFilters] = useState<string[]>([]);
 
   const filtered = useMemo(() => {
@@ -28,6 +29,9 @@ export default function RankingsPage() {
     }
     if (filterMinProtein) {
       items = items.filter((i) => i.baseMacros.protein >= Number(filterMinProtein));
+    }
+    if (filterMinCalories) {
+      items = items.filter((i) => i.baseMacros.calories >= Number(filterMinCalories));
     }
     if (filterMaxCalories) {
       items = items.filter((i) => i.baseMacros.calories <= Number(filterMaxCalories));
@@ -43,7 +47,7 @@ export default function RankingsPage() {
     }
 
     return items;
-  }, [allItems, filterRestaurant, filterMinProtein, filterMaxCalories, dietaryFilters]);
+  }, [allItems, filterRestaurant, filterMinProtein, filterMinCalories, filterMaxCalories, dietaryFilters]);
 
   const sorted = useMemo(() => {
     const list = [...filtered];
@@ -126,6 +130,20 @@ export default function RankingsPage() {
           />
         </div>
         <div>
+          <label className="text-xs text-muted-foreground block mb-1">Min calories</label>
+          <input
+            type="number"
+            min={0}
+            value={filterMinCalories}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === '' || (parseInt(v, 10) >= 0)) setFilterMinCalories(v);
+            }}
+            placeholder="e.g. 100"
+            className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm w-24"
+          />
+        </div>
+        <div>
           <label className="text-xs text-muted-foreground block mb-1">Max calories</label>
           <input
             type="number"
@@ -135,7 +153,7 @@ export default function RankingsPage() {
               const v = e.target.value;
               if (v === '' || (parseInt(v, 10) >= 0)) setFilterMaxCalories(v);
             }}
-            placeholder="e.g. 600"
+            placeholder="e.g. 1000"
             className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm w-24"
           />
         </div>

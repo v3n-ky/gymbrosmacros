@@ -6,10 +6,13 @@ import { proteinPerCalorie } from '@/lib/macros';
 
 export default function HomePage() {
   const allItems = getAllMenuItems();
-  const topProtein = [...allItems]
+  const reasonableItems = allItems.filter(
+    (i) => i.baseMacros.calories >= 100 && i.baseMacros.calories <= 1000
+  );
+  const topProtein = [...reasonableItems]
     .sort((a, b) => b.baseMacros.protein - a.baseMacros.protein)
     .slice(0, 3);
-  const topEfficiency = [...allItems]
+  const topEfficiency = [...reasonableItems]
     .sort(
       (a, b) =>
         proteinPerCalorie(b.baseMacros) - proteinPerCalorie(a.baseMacros)
