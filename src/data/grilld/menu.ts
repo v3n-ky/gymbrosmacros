@@ -58,6 +58,7 @@ const PATTY_GROUP = {
       name: 'Beef',
       macroDelta: {},
       isDefault: true,
+      tags: ['contains-meat'],
     },
     {
       // Approximate: Grill'd chicken burgers are separate menu items.
@@ -65,6 +66,7 @@ const PATTY_GROUP = {
       id: 'patty-chicken',
       name: 'Chicken',
       macroDelta: { calories: -110, protein: 15, fat: -13, carbs: 1 },
+      tags: ['contains-meat'],
     },
     {
       // Approximate: based on Garden Goodness vs Simply Grill'd on Traditional Bun.
@@ -86,11 +88,13 @@ const EXTRAS_GROUP = {
       id: 'extra-patty',
       name: 'Extra Patty',
       macroDelta: { calories: 250, protein: 20, fat: 16 },
+      tags: ['contains-meat'],
     },
     {
       id: 'extra-bacon',
       name: 'Bacon',
       macroDelta: { calories: 100, protein: 7, fat: 8 },
+      tags: ['contains-meat'],
     },
     {
       id: 'extra-avocado',

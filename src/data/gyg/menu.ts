@@ -133,24 +133,28 @@ const extrasGroup = {
       name: 'Extra Chicken',
       // PDF: Mild Grilled Chicken (100g) = 144 cal, 27.2g P, 0.7g C, 3.5g F
       macroDelta: { calories: 144, protein: 27, carbs: 1, fat: 4 },
+      tags: ['contains-meat'],
     },
     {
       id: 'gyg-extra-ground-beef',
       name: 'Extra Ground Beef',
       // PDF: Mild Ground Beef (100g) = 199 cal, 15.6g P, 3.6g C, 13.5g F
       macroDelta: { calories: 199, protein: 16, carbs: 4, fat: 14 },
+      tags: ['contains-meat'],
     },
     {
       id: 'gyg-extra-pulled-pork',
       name: 'Extra Pulled Pork',
       // PDF: Mild Pulled Pork (100g) = 235 cal, 25.5g P, 0.8g C, 14.5g F
       macroDelta: { calories: 235, protein: 26, carbs: 1, fat: 15 },
+      tags: ['contains-meat'],
     },
     {
       id: 'gyg-extra-beef-brisket',
       name: 'Extra Beef Brisket',
       // PDF: Mild Shredded Beef Brisket (100g) = 177 cal, 27.4g P, 0.3g C, 7.3g F
       macroDelta: { calories: 177, protein: 27, fat: 7 },
+      tags: ['contains-meat'],
     },
     // ── Toppings ──
     {

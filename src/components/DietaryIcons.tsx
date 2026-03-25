@@ -86,6 +86,20 @@ export function DietaryIcons({ tags }: { tags?: string[] }) {
   );
 }
 
+// Plant-based and animal tags are mutually exclusive.
+// Gluten Free is neutral and can be combined with either side.
+const PLANT_BASED_TAGS = ['vegan', 'vegetarian'];
+const ANIMAL_TAGS = ['contains-meat', 'contains-fish'];
+
+/** Returns the tags that should be disabled given the current selection. */
+export function getDisabledTags(selected: string[]): string[] {
+  const hasPlant = selected.some((t) => PLANT_BASED_TAGS.includes(t));
+  const hasAnimal = selected.some((t) => ANIMAL_TAGS.includes(t));
+  if (hasPlant) return ANIMAL_TAGS;
+  if (hasAnimal) return PLANT_BASED_TAGS;
+  return [];
+}
+
 /** Reusable filter toggle buttons for dietary tags */
 export function DietaryFilters({
   selected,
@@ -94,7 +108,10 @@ export function DietaryFilters({
   selected: string[];
   onChange: (tags: string[]) => void;
 }) {
+  const disabled = getDisabledTags(selected);
+
   const toggle = (tag: string) => {
+    if (disabled.includes(tag)) return;
     onChange(
       selected.includes(tag) ? selected.filter((t) => t !== tag) : [...selected, tag]
     );
@@ -104,14 +121,18 @@ export function DietaryFilters({
     <div className="flex flex-wrap gap-2">
       {FILTER_TAGS.map(({ tag, label, icon, color }) => {
         const active = selected.includes(tag);
+        const isDisabled = disabled.includes(tag);
         return (
           <button
             key={tag}
             onClick={() => toggle(tag)}
+            disabled={isDisabled}
             className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
               active
                 ? 'bg-primary/20 text-primary border border-primary/30'
-                : 'bg-secondary text-muted-foreground border border-transparent hover:border-border'
+                : isDisabled
+                  ? 'bg-secondary text-muted-foreground/30 border border-transparent cursor-not-allowed'
+                  : 'bg-secondary text-muted-foreground border border-transparent hover:border-border'
             }`}
           >
             <span className={active ? '' : color}>{icon}</span>

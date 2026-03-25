@@ -33,9 +33,13 @@ export default function RankingsPage() {
       items = items.filter((i) => i.baseMacros.calories <= Number(filterMaxCalories));
     }
     if (dietaryFilters.length > 0) {
-      items = items.filter((i) =>
-        dietaryFilters.every((tag) => i.tags?.includes(tag))
-      );
+      const prefs = dietaryFilters.filter((t) => t !== 'gluten-free-option');
+      const restrictions = dietaryFilters.filter((t) => t === 'gluten-free-option');
+      items = items.filter((i) => {
+        const matchesPref = prefs.length === 0 || prefs.some((t) => i.tags?.includes(t));
+        const matchesRestriction = restrictions.every((t) => i.tags?.includes(t));
+        return matchesPref && matchesRestriction;
+      });
     }
 
     return items;

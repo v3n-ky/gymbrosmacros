@@ -41,6 +41,16 @@ function favoriteKey(itemId: string, selectedOptions: Record<string, string[]>):
 
 // ─── deep sanitisers ──────────────────────────────────────────────────────────
 
+function sanitiseDietaryFilters(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const tags = raw.filter((t): t is string => typeof t === 'string');
+  const hasPlant = tags.some((t) => ['vegan', 'vegetarian'].includes(t));
+  const hasAnimal = tags.some((t) => ['contains-meat', 'contains-fish'].includes(t));
+  // Conflict: drop the animal side, keep plant-based + gluten-free
+  if (hasPlant && hasAnimal) return tags.filter((t) => !['contains-meat', 'contains-fish'].includes(t));
+  return tags;
+}
+
 function sanitiseMealTargets(raw: unknown): Record<MealType, MacroTargets> {
   const def: Record<MealType, MacroTargets> = { breakfast: {}, lunch: {}, dinner: {} };
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return def;
@@ -69,7 +79,7 @@ function sanitiseProfile(raw: unknown, id: ProfileId, label: string): UserProfil
     id,
     label: typeof r.label === 'string' && r.label.trim() ? r.label : label,
     mealTargets,
-    dietaryFilters: Array.isArray(r.dietaryFilters) ? (r.dietaryFilters as string[]) : [],
+    dietaryFilters: sanitiseDietaryFilters(r.dietaryFilters),
     restaurantFilters: Array.isArray(r.restaurantFilters) ? (r.restaurantFilters as string[]) : [],
     favorites: Array.isArray(r.favorites) ? (r.favorites as SavedItem[]) : [],
     savedMeals: Array.isArray(r.savedMeals) ? (r.savedMeals as SavedMeal[]) : [],

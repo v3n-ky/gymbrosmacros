@@ -54,14 +54,21 @@ export default function FindPage() {
 
     let items = allItems;
     if (dietaryFilters.length > 0) {
-      items = items.filter((item) =>
-        dietaryFilters.every((tag) => item.tags?.includes(tag))
-      );
+      // Preference tags (plant-based / animal): OR — item needs at least one match
+      // Restriction tags (gluten-free): AND — item must satisfy all
+      const prefs = dietaryFilters.filter((t) => t !== 'gluten-free-option');
+      const restrictions = dietaryFilters.filter((t) => t === 'gluten-free-option');
+      items = items.filter((item) => {
+        const matchesPref = prefs.length === 0 || prefs.some((t) => item.tags?.includes(t));
+        const matchesRestriction = restrictions.every((t) => item.tags?.includes(t));
+        return matchesPref && matchesRestriction;
+      });
     }
 
     const ranked = findMatchingItems(items, targets, {
       restaurantFilter: selectedRestaurants.length > 0 ? selectedRestaurants : undefined,
       maxResults: 100,
+      dietaryFilters,
     });
 
     // When no restaurant filter is active, interleave results so the first batch

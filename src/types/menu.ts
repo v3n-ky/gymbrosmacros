@@ -30,4 +30,6 @@ export interface CustomizationOption {
   name: string;
   macroDelta: Partial<Macros>;
   isDefault?: boolean;
+  /** Dietary tags — used to exclude this option when a conflicting dietary filter is active */
+  tags?: string[];
 }

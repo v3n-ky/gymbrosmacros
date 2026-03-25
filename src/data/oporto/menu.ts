@@ -20,6 +20,7 @@ const extrasGroup = {
       id: 'oporto-extra-chicken',
       name: 'Extra Chicken',
       macroDelta: { calories: 100, protein: 16, fat: 4 },
+      tags: ['contains-meat'],
     },
     {
       id: 'oporto-extra-cheese',
@@ -30,6 +31,7 @@ const extrasGroup = {
       id: 'oporto-extra-bacon',
       name: 'Bacon',
       macroDelta: { calories: 80, protein: 6, fat: 6 },
+      tags: ['contains-meat'],
     },
     {
       id: 'oporto-extra-avocado',

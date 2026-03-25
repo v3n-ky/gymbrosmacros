@@ -62,6 +62,7 @@ const EXTRAS_GROUP = {
       id: 'extra-double-meat',
       name: 'Double Meat',
       macroDelta: { calories: 120, protein: 18, fat: 3 },
+      tags: ['contains-meat'],
     },
     {
       id: 'extra-cheese',

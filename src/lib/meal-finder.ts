@@ -27,10 +27,20 @@ export function findMatchingItems(
     categoryFilter?: string[];
     maxResults?: number;
     maxVariants?: number;
+    /** Dietary filter tags active in the UI (e.g. ['vegan', 'gluten-free-option']).
+     *  Used to exclude incompatible customization options. */
+    dietaryFilters?: string[];
   }
 ): FinderResult[] {
   const maxResults = options?.maxResults ?? 20;
   const maxVariants = options?.maxVariants ?? 3;
+
+  // Derive which option-level tags to exclude based on active dietary filters.
+  // Vegan / vegetarian → exclude meat and fish add-ons.
+  const excludedOptionTags: string[] = [];
+  if (options?.dietaryFilters?.some((t) => t === 'vegan' || t === 'vegetarian')) {
+    excludedOptionTags.push('contains-meat', 'contains-fish');
+  }
 
   let items = allItems;
 
@@ -43,7 +53,7 @@ export function findMatchingItems(
 
   return items
     .flatMap((item) => {
-      const variants = findBestVariants(item, targets, maxVariants);
+      const variants = findBestVariants(item, targets, maxVariants, excludedOptionTags);
       if (variants.length === 0) return [];
       return [{ item, variants, bestVariant: variants[0] }];
     })
@@ -59,19 +69,24 @@ export function findMatchingItems(
  *  Single-select  → one entry per option.
  *  Multi halfAndHalf or maxSelections≥2 → singles + all pairs.
  *  Multi otherwise → singles only. */
-function getRequiredSelections(group: CustomizationGroup): string[][] {
-  const ids = group.options.map((o) => o.id);
+function getRequiredSelections(group: CustomizationGroup, excludedOptionTags: string[]): string[][] {
+  const ids = group.options
+    .filter((o) => !o.tags?.some((t) => excludedOptionTags.includes(t)))
+    .map((o) => o.id);
+
+  // Fall back to all options if every option would be excluded (required group must have a selection)
+  const effectiveIds = ids.length > 0 ? ids : group.options.map((o) => o.id);
 
   if (group.type === 'single') {
-    return ids.map((id) => [id]);
+    return effectiveIds.map((id) => [id]);
   }
 
-  const candidates: string[][] = ids.map((id) => [id]);
+  const candidates: string[][] = effectiveIds.map((id) => [id]);
 
   if (group.halfAndHalf || (group.maxSelections != null && group.maxSelections >= 2)) {
-    for (let i = 0; i < ids.length; i++) {
-      for (let j = i + 1; j < ids.length; j++) {
-        candidates.push([ids[i], ids[j]]);
+    for (let i = 0; i < effectiveIds.length; i++) {
+      for (let j = i + 1; j < effectiveIds.length; j++) {
+        candidates.push([effectiveIds[i], effectiveIds[j]]);
       }
     }
   }
@@ -96,13 +111,16 @@ function greedyPickOptional(
   item: MenuItem,
   currentSel: Record<string, string[]>,
   group: CustomizationGroup,
-  targets: MacroTargets
+  targets: MacroTargets,
+  excludedOptionTags: string[]
 ): string[] {
   const defaultId =
     group.defaultOptionId ?? group.options.find((o) => o.isDefault)?.id ?? null;
   const defaultSel: string[] = defaultId ? [defaultId] : [];
 
-  const ids = group.options.map((o) => o.id);
+  const ids = group.options
+    .filter((o) => !o.tags?.some((t) => excludedOptionTags.includes(t)))
+    .map((o) => o.id);
   const candidates: string[][] = [[], ...ids.map((id) => [id])];
 
   if (group.halfAndHalf || (group.maxSelections != null && group.maxSelections >= 2)) {
@@ -137,7 +155,8 @@ function greedyPickOptional(
 function findBestVariants(
   item: MenuItem,
   targets: MacroTargets,
-  maxVariants: number
+  maxVariants: number,
+  excludedOptionTags: string[] = []
 ): FinderVariant[] {
   const groups = item.customizationGroups ?? [];
   const requiredGroups = groups.filter((g) => g.required);
@@ -145,7 +164,7 @@ function findBestVariants(
 
   // Exhaustive search over required groups
   const requiredCombinations = cartesianProduct(
-    requiredGroups.map((g) => ({ id: g.id, selections: getRequiredSelections(g) }))
+    requiredGroups.map((g) => ({ id: g.id, selections: getRequiredSelections(g, excludedOptionTags) }))
   );
 
   const seen = new Set<string>();
@@ -155,7 +174,7 @@ function findBestVariants(
     // Greedily extend with the best optional group choices
     let sel = { ...reqSel };
     for (const group of optionalGroups) {
-      const best = greedyPickOptional(item, sel, group, targets);
+      const best = greedyPickOptional(item, sel, group, targets, excludedOptionTags);
       sel = { ...sel, [group.id]: best };
     }
 

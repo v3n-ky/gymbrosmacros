@@ -90,11 +90,13 @@ const PROTEIN_GROUP = {
       name: 'Poached Chicken',
       macroDelta: { calories: 84, protein: 18, fat: 1 },
       isDefault: true,
+      tags: ['contains-meat'],
     },
     {
       id: 'fb-protein-salmon-sashimi',
       name: 'Salmon Sashimi',
       macroDelta: { calories: 140, protein: 12, fat: 10 },
+      tags: ['contains-fish'],
     },
     {
       id: 'fb-protein-tofu',
@@ -105,11 +107,13 @@ const PROTEIN_GROUP = {
       id: 'fb-protein-miso-salmon',
       name: 'Miso Glazed Salmon Fillet',
       macroDelta: { calories: 266, protein: 20, fat: 16, carbs: 10 },
+      tags: ['contains-fish'],
     },
     {
       id: 'fb-protein-beef-brisket',
       name: 'Beef Brisket',
       macroDelta: { calories: 178, protein: 24, fat: 8, carbs: 1 },
+      tags: ['contains-meat'],
     },
     {
       id: 'fb-protein-miso-eggplant',
@@ -181,11 +185,13 @@ const EXTRA_PROTEIN_GROUP = {
       id: 'fb-xp-chicken',
       name: 'Poached Chicken',
       macroDelta: { calories: 84, protein: 18, fat: 1 },
+      tags: ['contains-meat'],
     },
     {
       id: 'fb-xp-salmon-sashimi',
       name: 'Salmon Sashimi',
       macroDelta: { calories: 140, protein: 12, fat: 10 },
+      tags: ['contains-fish'],
     },
     {
       id: 'fb-xp-tofu',
@@ -196,11 +202,13 @@ const EXTRA_PROTEIN_GROUP = {
       id: 'fb-xp-miso-salmon',
       name: 'Miso Glazed Salmon Fillet',
       macroDelta: { calories: 266, protein: 20, fat: 16, carbs: 10 },
+      tags: ['contains-fish'],
     },
     {
       id: 'fb-xp-beef-brisket',
       name: 'Beef Brisket',
       macroDelta: { calories: 178, protein: 24, fat: 8, carbs: 1 },
+      tags: ['contains-meat'],
     },
     {
       id: 'fb-xp-miso-eggplant',
