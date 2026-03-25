@@ -1,25 +1,14 @@
 import { MenuItem } from '@/types/menu';
 
-const sizeGroup = {
-  id: 'oporto-size',
-  name: 'Size',
-  type: 'single' as const,
-  required: true,
-  defaultOptionId: 'oporto-size-regular',
-  options: [
-    {
-      id: 'oporto-size-regular',
-      name: 'Regular',
-      macroDelta: {},
-      isDefault: true,
-    },
-    {
-      id: 'oporto-size-junior',
-      name: 'Junior',
-      macroDelta: { calories: -150, protein: -10, carbs: -14, fat: -8 },
-    },
-  ],
-};
+// ─────────────────────────────────────────────────────────────────────────────
+// Calories are OFFICIAL from the Oporto ordering API (api.oporto.com.au /
+// mobile-services/content/menu/{store}), sourced March 2026.
+//
+// Protein / carbs / fat are ESTIMATED — the existing ratios from prior data
+// have been proportionally scaled to match the official calorie totals.
+// Macro splits have NOT been independently verified from a third-party source.
+// Display an "estimated macros" disclosure wherever P/C/F are shown for Oporto.
+// ─────────────────────────────────────────────────────────────────────────────
 
 const extrasGroup = {
   id: 'oporto-extras',
@@ -78,76 +67,94 @@ const sauceGroup = {
 
 export const oportoMenu: MenuItem[] = [
   {
+    // Official: 535 cal / 2238 kJ (Single Bondi Burger)
     id: 'oporto-bondi-burger',
     restaurantSlug: 'oporto',
     name: 'Bondi Burger',
     category: 'Burgers',
-    baseMacros: { calories: 520, protein: 28, carbs: 42, fat: 24 },
+    baseMacros: { calories: 535, protein: 30, carbs: 46, fat: 26 },
     isPopular: true,
     tags: ['contains-meat', 'chicken'],
-    customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
+    customizationGroups: [extrasGroup, sauceGroup],
   },
   {
+    // Official: 696 cal / 2910 kJ (Double Bondi Burger)
     id: 'oporto-double-bondi-burger',
     restaurantSlug: 'oporto',
     name: 'Double Bondi Burger',
     category: 'Burgers',
-    baseMacros: { calories: 720, protein: 44, carbs: 44, fat: 38 },
+    baseMacros: { calories: 696, protein: 44, carbs: 44, fat: 38 },
     tags: ['high-protein', 'contains-meat', 'chicken'],
-    customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
+    customizationGroups: [extrasGroup, sauceGroup],
   },
   {
-    id: 'oporto-chicken-rappa',
+    // Official: 719 cal / 3010 kJ (Portuguese Crispy Burger)
+    // Previously listed as "Original Chilli Chicken Burger" — no longer on the
+    // Oporto online menu under that name. Mapped to the Portuguese Crispy Burger
+    // which is Oporto's current featured crispy chicken burger.
+    id: 'oporto-portuguese-crispy-burger',
     restaurantSlug: 'oporto',
-    name: 'Chicken Rappa',
-    category: 'Wraps',
-    baseMacros: { calories: 480, protein: 26, carbs: 48, fat: 18 },
+    name: 'Portuguese Crispy Burger',
+    category: 'Burgers',
+    baseMacros: { calories: 719, protein: 38, carbs: 59, fat: 33 },
+    isPopular: true,
     tags: ['contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
-    id: 'oporto-grilled-chicken-rappa',
+    // Official: 421 cal / 1760 kJ (Chicken Rappa)
+    id: 'oporto-chicken-rappa',
     restaurantSlug: 'oporto',
-    name: 'Grilled Chicken Rappa',
-    category: 'Wraps',
-    baseMacros: { calories: 420, protein: 30, carbs: 44, fat: 14 },
+    name: 'Chicken Rappa',
+    category: 'Rappas',
+    baseMacros: { calories: 421, protein: 23, carbs: 42, fat: 16 },
+    tags: ['contains-meat', 'chicken'],
+    customizationGroups: [extrasGroup, sauceGroup],
+  },
+  {
+    // Official: 641 cal / 2680 kJ (Bondi Rappa — the grilled chicken rappa)
+    // Previously called "Grilled Chicken Rappa". Now called "Bondi Rappa" on
+    // the Oporto online menu.
+    id: 'oporto-bondi-rappa',
+    restaurantSlug: 'oporto',
+    name: 'Bondi Rappa',
+    category: 'Rappas',
+    baseMacros: { calories: 641, protein: 46, carbs: 67, fat: 21 },
     isPopular: true,
     tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
+    // Official: 573 cal / 2399 kJ (Pulled Chicken Bowl)
     id: 'oporto-pulled-chicken-bowl',
     restaurantSlug: 'oporto',
     name: 'Pulled Chicken Bowl',
     category: 'Bowls',
-    baseMacros: { calories: 510, protein: 36, carbs: 52, fat: 16 },
+    baseMacros: { calories: 573, protein: 42, carbs: 60, fat: 18 },
     tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
-    id: 'oporto-grilled-chicken-bowl',
+    // Official: 526 cal / 2200 kJ (Chicken Salad Bowl)
+    // Previously called "Grilled Chicken Bowl". Now called "Chicken Salad Bowl"
+    // on the Oporto online menu.
+    id: 'oporto-chicken-salad-bowl',
     restaurantSlug: 'oporto',
-    name: 'Grilled Chicken Bowl',
+    name: 'Chicken Salad Bowl',
     category: 'Bowls',
-    baseMacros: { calories: 480, protein: 38, carbs: 48, fat: 14 },
+    baseMacros: { calories: 526, protein: 43, carbs: 54, fat: 16 },
     tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [extrasGroup, sauceGroup],
   },
   {
-    id: 'oporto-original-chilli-chicken-burger',
+    // Official: 240 cal / 1005 kJ (Chicken Tenders 4 Pack — grilled)
+    // Note: Oporto sells a 4-pack of grilled chicken tenders, not a 5-pack.
+    // Renamed from "Oporto Chicken Tenders (5pc)".
+    id: 'oporto-chicken-tenders-4pc',
     restaurantSlug: 'oporto',
-    name: 'Original Chilli Chicken Burger',
-    category: 'Burgers',
-    baseMacros: { calories: 560, protein: 30, carbs: 46, fat: 26 },
-    tags: ['high-protein', 'contains-meat', 'chicken'],
-    customizationGroups: [sizeGroup, extrasGroup, sauceGroup],
-  },
-  {
-    id: 'oporto-chicken-tenders-5pc',
-    restaurantSlug: 'oporto',
-    name: 'Oporto Chicken Tenders (5pc)',
+    name: 'Chicken Tenders (4pc)',
     category: 'Sides',
-    baseMacros: { calories: 440, protein: 32, carbs: 28, fat: 22 },
+    baseMacros: { calories: 240, protein: 30, carbs: 8, fat: 9 },
     tags: ['high-protein', 'contains-meat', 'chicken'],
     customizationGroups: [sauceGroup],
   },
