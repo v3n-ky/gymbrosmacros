@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:netlify": "playwright test --config playwright-netlify.config.ts",
     "scrape:grilld": "npx tsx scripts/scrape-grilld-nutrition.ts",
     "scrape:oporto": "npx tsx scripts/scrape-oporto-nutrition.ts"
   },

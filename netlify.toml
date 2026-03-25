@@ -2,5 +2,12 @@
   command   = "npm run build"
   publish   = ".next"
 
+[dev]
+  # Proxy the Next.js dev server so Netlify Forms POSTs are forwarded to Netlify.
+  # Run: netlify dev
+  command   = "npm run dev"
+  port      = 3000
+  targetPort = 3000
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"

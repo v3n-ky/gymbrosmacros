@@ -36,7 +36,9 @@ function FeedbackModal({ open, type, restaurant, onClose }: FeedbackModalProps) 
     if (email) fields['email'] = email;
 
     try {
-      const res = await fetch('/', {
+      // POST to the static netlify-forms.html so Netlify's CDN forms handler
+      // intercepts the request before the Next.js SSR function sees it.
+      const res = await fetch('/netlify-forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(fields).toString(),
