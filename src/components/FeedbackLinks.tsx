@@ -27,17 +27,18 @@ function FeedbackModal({ open, type, restaurant, onClose }: FeedbackModalProps) 
     if (!details.trim()) return;
 
     setStatus('sending');
+
+    const formName = isOutdated ? 'outdated-data' : 'restaurant-request';
+    const fields: Record<string, string> = { 'form-name': formName, details };
+    if (isOutdated && restaurantName) fields['restaurant'] = restaurantName;
+    if (isOutdated && itemName) fields['item-name'] = itemName;
+    if (email) fields['email'] = email;
+
     try {
-      const res = await fetch('/api/feedback', {
+      const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type,
-          restaurant: isOutdated ? restaurantName : undefined,
-          itemName: isOutdated ? itemName : undefined,
-          details,
-          email: email || undefined,
-        }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(fields).toString(),
       });
 
       if (res.ok) {

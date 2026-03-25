@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Netlify form definitions</title></head>
+  <body>
+    <!-- Hidden form definitions so Netlify's build bot registers both forms.
+         Actual submissions are made via AJAX from FeedbackLinks.tsx. -->
+    <form name="outdated-data" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="outdated-data" />
+      <input name="restaurant" />
+      <input name="item-name" />
+      <textarea name="details"></textarea>
+      <input name="email" />
+    </form>
+
+    <form name="restaurant-request" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="restaurant-request" />
+      <textarea name="details"></textarea>
+      <input name="email" />
+    </form>
+  </body>
+</html>
