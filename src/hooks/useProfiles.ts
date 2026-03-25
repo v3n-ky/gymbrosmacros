@@ -2,7 +2,18 @@
 
 import { useCallback } from 'react';
 import { useLocalStorage } from './useLocalStorage';
-import { UserProfile, ProfileId, SavedItem, SavedMeal } from '@/types/profile';
+import { UserProfile, ProfileId, MealType, SavedItem, SavedMeal } from '@/types/profile';
+import { MacroTargets } from '@/types/meal';
+
+// ─── schema version ───────────────────────────────────────────────────────────
+// Bump SCHEMA_VERSION whenever a field is renamed, removed, or its structure
+// changes in a way that old data would produce the wrong runtime behaviour.
+// Add a corresponding entry to MIGRATIONS below.
+//
+// History:
+//   v1 (current) — mealTargets: Record<MealType, MacroTargets>, savedMeals added
+//   v0            — macroTargets: MacroTargets (flat, per-profile), no savedMeals
+export const SCHEMA_VERSION = 1;
 
 const makeDefault = (id: ProfileId, label: string): UserProfile => ({
   id,
@@ -28,15 +39,55 @@ function favoriteKey(itemId: string, selectedOptions: Record<string, string[]>):
   return `${itemId}__${sorted}`;
 }
 
-/** Ensure a value from localStorage is a valid profile record, filling gaps with defaults. */
+// ─── deep sanitisers ──────────────────────────────────────────────────────────
+
+function sanitiseMealTargets(raw: unknown): Record<MealType, MacroTargets> {
+  const def: Record<MealType, MacroTargets> = { breakfast: {}, lunch: {}, dinner: {} };
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return def;
+  const m = raw as Record<string, unknown>;
+  const toTargets = (v: unknown): MacroTargets =>
+    v && typeof v === 'object' && !Array.isArray(v) ? (v as MacroTargets) : {};
+  return {
+    breakfast: toTargets(m.breakfast),
+    lunch: toTargets(m.lunch),
+    dinner: toTargets(m.dinner),
+  };
+}
+
+function sanitiseProfile(raw: unknown, id: ProfileId, label: string): UserProfile {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return makeDefault(id, label);
+  const r = raw as Record<string, unknown>;
+
+  // v0 → v1 migration: old data stored flat macroTargets instead of nested mealTargets.
+  // Rescue the flat targets into lunch (most common meal) so the user doesn't lose their data.
+  let mealTargets = sanitiseMealTargets(r.mealTargets);
+  if (!r.mealTargets && r.macroTargets && typeof r.macroTargets === 'object') {
+    mealTargets = { breakfast: {}, lunch: r.macroTargets as MacroTargets, dinner: {} };
+  }
+
+  return {
+    id,
+    label: typeof r.label === 'string' && r.label.trim() ? r.label : label,
+    mealTargets,
+    dietaryFilters: Array.isArray(r.dietaryFilters) ? (r.dietaryFilters as string[]) : [],
+    restaurantFilters: Array.isArray(r.restaurantFilters) ? (r.restaurantFilters as string[]) : [],
+    favorites: Array.isArray(r.favorites) ? (r.favorites as SavedItem[]) : [],
+    savedMeals: Array.isArray(r.savedMeals) ? (r.savedMeals as SavedMeal[]) : [],
+    ...(r.lastMealType === 'breakfast' || r.lastMealType === 'lunch' || r.lastMealType === 'dinner'
+      ? { lastMealType: r.lastMealType }
+      : {}),
+  };
+}
+
+/** Deeply validate every field so any stale or corrupt localStorage shape is safe. */
 function sanitiseProfiles(raw: unknown): Record<ProfileId, UserProfile> {
   const base = (raw && typeof raw === 'object' && !Array.isArray(raw))
     ? (raw as Record<string, unknown>)
     : {};
 
   return {
-    A: { ...makeDefault('A', 'Cutting'), ...(typeof base.A === 'object' && base.A ? base.A as Partial<UserProfile> : {}) },
-    B: { ...makeDefault('B', 'Bulking'), ...(typeof base.B === 'object' && base.B ? base.B as Partial<UserProfile> : {}) },
+    A: sanitiseProfile(base.A, 'A', 'Cutting'),
+    B: sanitiseProfile(base.B, 'B', 'Bulking'),
   };
 }
 

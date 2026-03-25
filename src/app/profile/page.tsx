@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -88,6 +88,11 @@ function ProfileForm({ profileId }: { profileId: ProfileId }) {
   const [label, setLabel] = useState(profile?.label ?? '');
   const [labelSaved, setLabelSaved] = useState(false);
   const [activeMeal, setActiveMeal] = useState<MealType>('lunch');
+
+  // Sync label state when profile loads from localStorage (same fix as MealTargetForm)
+  useEffect(() => {
+    setLabel(profile?.label ?? '');
+  }, [profile?.label]);
 
   const handleSaveLabel = () => {
     updateProfile(profileId, { label: label.trim() || profileId });
