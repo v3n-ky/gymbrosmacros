@@ -68,6 +68,9 @@ function MealTargetForm({ profileId, mealType }: { profileId: ProfileId; mealTyp
                 min={0}
                 value={targets[key] ?? ''}
                 onChange={(e) => setField(key, e.target.value)}
+                onKeyDown={(e) => {
+                  if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
+                }}
                 placeholder={placeholder}
               />
             </div>

@@ -27,11 +27,15 @@ export function MacroInput({ targets, onChange }: MacroInputProps) {
           <Input
             id={key}
             type="number"
+            min={0}
             placeholder={placeholder}
             value={targets[key] ?? ''}
             onChange={(e) => {
               const value = e.target.value === '' ? undefined : Number(e.target.value);
               onChange({ ...targets, [key]: value });
+            }}
+            onKeyDown={(e) => {
+              if (['-', '+', 'e', 'E', '.'].includes(e.key)) e.preventDefault();
             }}
             className="mt-1"
           />
