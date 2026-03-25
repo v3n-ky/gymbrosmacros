@@ -59,10 +59,28 @@ export default function FindPage() {
       );
     }
 
-    return findMatchingItems(items, targets, {
+    const ranked = findMatchingItems(items, targets, {
       restaurantFilter: selectedRestaurants.length > 0 ? selectedRestaurants : undefined,
-      maxResults: 21,
+      maxResults: 100,
     });
+
+    // When no restaurant filter is active, interleave results so the first batch
+    // includes the best match from every restaurant — prevents highly-customisable
+    // restaurants (e.g. GYG, Fishbowl) from monopolising the visible results.
+    if (selectedRestaurants.length > 0) return ranked.slice(0, 21);
+
+    const seen = new Set<string>();
+    const representatives: typeof ranked = [];
+    const rest: typeof ranked = [];
+    for (const r of ranked) {
+      if (!seen.has(r.item.restaurantSlug)) {
+        seen.add(r.item.restaurantSlug);
+        representatives.push(r);
+      } else {
+        rest.push(r);
+      }
+    }
+    return [...representatives, ...rest].slice(0, 21);
   }, [allItems, targets, selectedRestaurants, dietaryFilters]);
 
   return (
